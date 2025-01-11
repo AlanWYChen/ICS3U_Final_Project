@@ -6,18 +6,12 @@ import javax.swing.*;
 
 public class App extends JPanel implements KeyListener, Runnable {
 
-    public static class Interactable {
-        public Image img;
-        public int x = 0;
-        public int y = 0;
-        public int type = 0;
-    }
-
     public static Image pacmanImg;
     public static int pacmanX;
     public static int pacmanY;
     public static int pacmanVelocity;
     public static int pacmanDirection;
+    // 0 = up, 1 = right, 2 = down, 3 = left
 
     // JPanel Settings
     public App() {
@@ -30,6 +24,7 @@ public class App extends JPanel implements KeyListener, Runnable {
         thread.start();
     }
 
+    // 每一帧都跑一次这个函数
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -42,11 +37,10 @@ public class App extends JPanel implements KeyListener, Runnable {
 
     public static void main(String[] args) throws Exception {
         // Image Importation
-        pacmanImg = ImageIO.read(new File("resources/pacman.png")).getScaledInstance(25, 25, 25);
+        pacmanImg = ImageIO.read(new File("resources/pacman.png")).getScaledInstance(25, 25, 0);
         pacmanX = 200;
         pacmanY = 200;
         pacmanVelocity = 25;
-        
 
         JFrame frame = new JFrame("Pacman");
         App panel = new App();
@@ -55,6 +49,9 @@ public class App extends JPanel implements KeyListener, Runnable {
         frame.pack();
     }
 
+    // 控制帧数
+    // Thread.sleep(1000) = 1秒1帧
+    // Thread.sleep(100) = 1秒10帧
     // Thread Method
     @Override
     public void run(){
@@ -71,9 +68,19 @@ public class App extends JPanel implements KeyListener, Runnable {
 
     // Key Listener Methods
     @Override
-    public void keyPressed(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {
+        // 按下
+
+        if (e.getKeyChar() == 'a') {
+            // 按下A键跑 XXX
+        }
+
+    }
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+        // 松开
+
+    }
     @Override
     public void keyTyped(KeyEvent e) {}
 }
