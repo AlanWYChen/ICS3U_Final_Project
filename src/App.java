@@ -1,34 +1,27 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class App extends JPanel implements KeyListener, Runnable {
 
-    public static class Entity {
-        public BufferedImage img;
-        public int x = 0;
-        public int y = 0;
-        public int velocity = 0;
-        // 0 = up, 1 = right, 2 = down, 3 = left
-        public int direction = 0;
-    }
-
     public static class Interactable {
-        public BufferedImage img;
+        public Image img;
         public int x = 0;
         public int y = 0;
         public int type = 0;
     }
 
-    public static Entity pacman;
-    public static Entity[] ghosts = new Entity[4];
+    public static Image pacmanImg;
+    public static int pacmanX;
+    public static int pacmanY;
+    public static int pacmanVelocity;
+    public static int pacmanDirection;
 
     // JPanel Settings
     public App() {
-        setPreferredSize(new Dimension(800, 400));
+        setPreferredSize(new Dimension(1400, 800));
         // Add KeyListener
         this.setFocusable(true);
         addKeyListener(this);
@@ -41,18 +34,18 @@ public class App extends JPanel implements KeyListener, Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        pacman.x += pacman.velocity;
-
-        g.drawImage(pacman.img, pacman.x, pacman.y, null);
+        pacmanX += pacmanVelocity;
+        g.setColor(new Color(0, 0, 0));
+        g.fillRect(0, 0, 1400, 800);
+        g.drawImage(pacmanImg, pacmanX, pacmanY, null);
     }
 
     public static void main(String[] args) throws Exception {
         // Image Importation
-        App.pacman = new Entity();
-        pacman.img = ImageIO.read(new File("resources/pacman.png"));
-        pacman.x = 100;
-        pacman.y = 100;
-        pacman.velocity = 1;
+        pacmanImg = ImageIO.read(new File("resources/pacman.png")).getScaledInstance(25, 25, 25);
+        pacmanX = 200;
+        pacmanY = 200;
+        pacmanVelocity = 25;
         
 
         JFrame frame = new JFrame("Pacman");
@@ -68,7 +61,7 @@ public class App extends JPanel implements KeyListener, Runnable {
         while(true){
             // Setting up Frame Rate
             try {
-                Thread.sleep(20);
+                Thread.sleep(1000);
             }
             catch(InterruptedException e) {}
             // Drawing the Screen
