@@ -22,6 +22,7 @@ public class App extends JPanel implements KeyListener, Runnable {
         // Add Thread
         Thread thread = new Thread(this);
         thread.start();
+        // Hi
     }
 
     // 每一帧都跑一次这个函数
