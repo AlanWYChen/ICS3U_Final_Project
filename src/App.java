@@ -28,6 +28,7 @@ public class App extends JPanel implements KeyListener, Runnable {
         // Add Thread
         Thread thread = new Thread(this);
         thread.start();
+        // Hi
     }
 
     @Override
