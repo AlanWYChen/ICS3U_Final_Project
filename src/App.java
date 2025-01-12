@@ -4,7 +4,13 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class App extends JPanel implements KeyListener, Runnable {
+public class App extends JPanel implements KeyListener, Runnable,  MouseListener {
+
+    // start, game, rule, ranking, win, lose
+    public static String state = "start";
+
+    public static Image start;
+    public static Image game;
 
     public static Image pacmanImg;
     public static int pacmanX;
@@ -19,25 +25,41 @@ public class App extends JPanel implements KeyListener, Runnable {
         // Add KeyListener
         this.setFocusable(true);
         addKeyListener(this);
+        addMouseListener(this);
         // Add Thread
         Thread thread = new Thread(this);
         thread.start();
-        // Hi
     }
 
     // 每一帧都跑一次这个函数
     @Override
+    @SuppressWarnings("ConvertToStringSwitch")
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        pacmanX += pacmanVelocity;
-        g.setColor(new Color(0, 0, 0));
-        g.fillRect(0, 0, 1400, 800);
-        g.drawImage(pacmanImg, pacmanX, pacmanY, null);
+        if ("start".equals(state)) {
+            g.drawImage(start, 0, 0, this);
+        } else if ("game".equals(state)) {
+            g.drawImage(game, 0, 0, this);
+        } else if ("rule".equals(state)) {
+            
+        } else if ("ranking".equals(state)) {
+            
+        } else if ("win".equals(state)) {
+            
+        } else if ("lose".equals(state)) {
+            
+        }
+        
     }
 
     public static void main(String[] args) throws Exception {
         // Image Importation
+        game = ImageIO.read(new File("resources/game.png")).getScaledInstance(1400, 800, 0);
+        start = ImageIO.read(new File("resources/start.png")).getScaledInstance(1400, 800, 0);
+
+
+
         pacmanImg = ImageIO.read(new File("resources/pacman.png")).getScaledInstance(25, 25, 0);
         pacmanX = 200;
         pacmanY = 200;
@@ -84,5 +106,35 @@ public class App extends JPanel implements KeyListener, Runnable {
     }
     @Override
     public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+        if (state.equals("start")) {
+
+            // 341, 564
+            // 499, 602
+            if (340 <= e.getX() && e.getX() <= 500 &&
+                564 <= e.getY() && e.getY() <= 600) {
+                state = "game";
+            }
+
+        }
+
+        System.out.println(e.getX() + ", " + e.getY());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
+
 }
 
