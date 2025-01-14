@@ -1,37 +1,35 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class App extends JPanel implements KeyListener, Runnable,  MouseListener {
 
-    // start, game, rule, ranking, win, lose
     public static String state = "start";
 
     public static Image start;
     public static Image game;
+    public static Image rule;
+    public static Image Ranking;
 
     public static Image pacmanImg;
     public static int pacmanX;
     public static int pacmanY;
     public static int pacmanVelocity;
     public static int pacmanDirection;
-    // 0 = up, 1 = right, 2 = down, 3 = left
 
-    // JPanel Settings
     public App() {
         setPreferredSize(new Dimension(1400, 800));
-        // Add KeyListener
+        // KeyListener
         this.setFocusable(true);
         addKeyListener(this);
         addMouseListener(this);
-        // Add Thread
+        // Thread
         Thread thread = new Thread(this);
         thread.start();
     }
 
-    // 每一帧都跑一次这个函数
     @Override
     @SuppressWarnings("ConvertToStringSwitch")
     public void paintComponent(Graphics g) {
@@ -42,9 +40,9 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
         } else if ("game".equals(state)) {
             g.drawImage(game, 0, 0, this);
         } else if ("rule".equals(state)) {
-            
-        } else if ("ranking".equals(state)) {
-            
+            g.drawImage(rule, 0, 0, this);
+        } else if ("Ranking".equals(state)) {
+            g.drawImage(Ranking,0,0, this);
         } else if ("win".equals(state)) {
             
         } else if ("lose".equals(state)) {
@@ -53,10 +51,11 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
         
     }
 
-    public static void main(String[] args) throws Exception {
-        // Image Importation
+    public static void main(String[] args) throws IOException {
         game = ImageIO.read(new File("resources/game.png")).getScaledInstance(1400, 800, 0);
         start = ImageIO.read(new File("resources/start.png")).getScaledInstance(1400, 800, 0);
+        rule = ImageIO.read(new File("resources/rule.png")).getScaledInstance(1400, 800, 0);
+        Ranking = ImageIO.read(new File("resources/Ranking.png")).getScaledInstance(1400,  800,  0);
 
 
 
@@ -66,42 +65,45 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
         pacmanVelocity = 25;
 
         JFrame frame = new JFrame("Pacman");
-        App panel = new App();
+        JPanel panel = new App();
         frame.add(panel);
         frame.setVisible(true);
         frame.pack();
     }
 
-    // 控制帧数
-    // Thread.sleep(1000) = 1秒1帧
-    // Thread.sleep(100) = 1秒10帧
-    // Thread Method
     @Override
     public void run(){
         while(true){
             // Setting up Frame Rate
             try {
-                Thread.sleep(1000);
+                Thread.sleep(20); //50 frames per second
             }
             catch(InterruptedException e) {}
             // Drawing the Screen
             repaint();
         }
     }
+    
 
-    // Key Listener Methods
-    @Override
+
+    
     public void keyPressed(KeyEvent e) {
-        // 按下
 
-        if (e.getKeyChar() == 'a') {
-            // 按下A键跑 XXX
-        }
+    	if (e.getKeyChar() == 'a') {
+    		state = "start";
+    	}
+    	else if (e.getKeyChar() == 'b') {
+    		state = "Ranking";
+    	}
+    	else if (e.getKeyChar() == 'c') {
+    		state = "rule";
+    	}
+
+    	
 
     }
     @Override
     public void keyReleased(KeyEvent e) {
-        // 松开
 
     }
     @Override
@@ -112,13 +114,37 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
 
         if (state.equals("start")) {
 
-            // 341, 564
-            // 499, 602
             if (340 <= e.getX() && e.getX() <= 500 &&
                 564 <= e.getY() && e.getY() <= 600) {
                 state = "game";
             }
+            if (591 <= e.getX() && e.getX() <= 776 &&
+                552 <= e.getY() && e.getY() <= 616) {
+                    state = "rule";
+            }
+            if (883 <= e.getX() && e.getX() <= 1073 &&
+            	553 <= e.getY() && e.getY() <= 617) {
+            	state = "Ranking";
+            	
+            }
+                
 
+        }
+
+        else if (state.equals("rule")){
+
+            if (0 <= e.getX() && e.getX() <= 1400 &&
+                0 <= e.getY() && e.getY() <= 800) {
+                    state = "start";
+            }
+        }
+        
+        else if (state.equals("Ranking")){
+        	
+        	if (0 <= e.getX() && e.getX() <= 1400 &&
+                0 <= e.getY() && e.getY() <= 800) {
+                   state = "start";
+                }
         }
 
         System.out.println(e.getX() + ", " + e.getY());
