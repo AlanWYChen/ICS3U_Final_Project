@@ -4,14 +4,14 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class App extends JPanel implements KeyListener, Runnable,  MouseListener {
+public class App extends JPanel implements KeyListener, Runnable, MouseListener {
 
     public static String state = "start";
 
     public static Image start;
     public static Image game;
     public static Image rule;
-    public static Image Ranking;
+    public static Image ranking;
 
     public static Image pacmanImg;
     public static int pacmanX;
@@ -35,14 +35,15 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // 最好换成state.equal("start")
         if ("start".equals(state)) {
             g.drawImage(start, 0, 0, this);
         } else if ("game".equals(state)) {
             g.drawImage(game, 0, 0, this);
         } else if ("rule".equals(state)) {
             g.drawImage(rule, 0, 0, this);
-        } else if ("Ranking".equals(state)) {
-            g.drawImage(Ranking,0,0, this);
+        } else if ("ranking".equals(state)) {
+            g.drawImage(ranking,0,0, this);
         } else if ("win".equals(state)) {
             
         } else if ("lose".equals(state)) {
@@ -55,7 +56,7 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
         game = ImageIO.read(new File("resources/game.png")).getScaledInstance(1400, 800, 0);
         start = ImageIO.read(new File("resources/start.png")).getScaledInstance(1400, 800, 0);
         rule = ImageIO.read(new File("resources/rule.png")).getScaledInstance(1400, 800, 0);
-        Ranking = ImageIO.read(new File("resources/Ranking.png")).getScaledInstance(1400,  800,  0);
+        ranking = ImageIO.read(new File("resources/ranking.png")).getScaledInstance(1400,  800,  0);
 
 
 
@@ -76,7 +77,7 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
         while(true){
             // Setting up Frame Rate
             try {
-                Thread.sleep(20); //50 frames per second
+                Thread.sleep(20); // 50 frames per second
             }
             catch(InterruptedException e) {}
             // Drawing the Screen
@@ -87,19 +88,18 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
 
 
     
+    @Override
     public void keyPressed(KeyEvent e) {
 
     	if (e.getKeyChar() == 'a') {
     		state = "start";
     	}
     	else if (e.getKeyChar() == 'b') {
-    		state = "Ranking";
+    		state = "ranking";
     	}
     	else if (e.getKeyChar() == 'c') {
     		state = "rule";
     	}
-
-    	
 
     }
     @Override
@@ -124,7 +124,7 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
             }
             if (883 <= e.getX() && e.getX() <= 1073 &&
             	553 <= e.getY() && e.getY() <= 617) {
-            	state = "Ranking";
+            	state = "ranking";
             	
             }
                 
@@ -139,7 +139,7 @@ public class App extends JPanel implements KeyListener, Runnable,  MouseListener
             }
         }
         
-        else if (state.equals("Ranking")){
+        else if (state.equals("ranking")){
         	
         	if (0 <= e.getX() && e.getX() <= 1400 &&
                 0 <= e.getY() && e.getY() <= 800) {
