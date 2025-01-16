@@ -12,6 +12,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static Image game;
     public static Image rule;
     public static Image ranking;
+    public static Image win;
+    public static Image lose;
 
     public static Image pacmanImg;
     public static int pacmanX;
@@ -35,7 +37,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // 最好换成state.equal("start")
         if ("start".equals(state)) {
             g.drawImage(start, 0, 0, this);
         } else if ("game".equals(state)) {
@@ -45,9 +46,9 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         } else if ("ranking".equals(state)) {
             g.drawImage(ranking,0,0, this);
         } else if ("win".equals(state)) {
-            
+        	 g.drawImage(win,0,0, this);
         } else if ("lose".equals(state)) {
-            
+        	 g.drawImage(lose,0,0, this);
         }
         
     }
@@ -57,6 +58,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         start = ImageIO.read(new File("resources/start.png")).getScaledInstance(1400, 800, 0);
         rule = ImageIO.read(new File("resources/rule.png")).getScaledInstance(1400, 800, 0);
         ranking = ImageIO.read(new File("resources/ranking.png")).getScaledInstance(1400,  800,  0);
+        win = ImageIO.read(new File("resources/win.png")).getScaledInstance(1400,  800,  0);
+        lose = ImageIO.read(new File("resources/lose.png")).getScaledInstance(1400,  800,  0);
 
 
 
@@ -90,16 +93,25 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     
     @Override
     public void keyPressed(KeyEvent e) {
+    	System.out.println(state);
+    	if(state.equals("start")) {
+    		if (e.getKeyChar() == 'a') {
+    			state = "rule";
+    		}
+    		else if(e.getKeyChar() == 'b') {
+    			state = "ranking";
+    		}
+    	}
+    	else if(state.equals("game")) {
+    		if (e.getKeyChar() == '-') {
+    			state = "win";
+    		}
+    		else if (e.getKeyChar() == '=') {
+        		state = "lose";
+        	}
+    	}
 
-    	if (e.getKeyChar() == 'a') {
-    		state = "start";
-    	}
-    	else if (e.getKeyChar() == 'b') {
-    		state = "ranking";
-    	}
-    	else if (e.getKeyChar() == 'c') {
-    		state = "rule";
-    	}
+    	
 
     }
     @Override
@@ -146,8 +158,12 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                    state = "start";
                 }
         }
+        
+               
 
-        System.out.println(e.getX() + ", " + e.getY());
+        	
+       System.out.println(e.getX() + ", " + e.getY());
+    
     }
 
     @Override
