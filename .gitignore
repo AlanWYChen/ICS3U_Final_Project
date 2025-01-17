@@ -1,3 +1,8 @@
+# vscode files
 .vscode
 bin
+# macOS files
 .DS_Store
+# Eclipse project files
+.project
+.classpath
