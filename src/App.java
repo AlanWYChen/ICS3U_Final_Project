@@ -16,10 +16,13 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static Image lose;
 
     public static Image pacmanImg;
+    public static Image pacmanOpenMouthImg;
     public static int pacmanX;
     public static int pacmanY;
     public static int pacmanVelocity;
+    // 0 = up, 1 = right, 2 = down, 3 = left
     public static int pacmanDirection;
+    public static boolean openMouth;
 
     public App() {
         setPreferredSize(new Dimension(1400, 800));
@@ -41,6 +44,26 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             g.drawImage(start, 0, 0, this);
         } else if ("game".equals(state)) {
             g.drawImage(game, 0, 0, this);
+
+            // game logic
+            if (pacmanDirection == 0) {
+                pacmanY -= pacmanVelocity;
+            } else if (pacmanDirection == 1) {
+                pacmanX += pacmanVelocity;
+            } else if (pacmanDirection == 2) {
+                pacmanY += pacmanVelocity;
+            } else if (pacmanDirection == 3) {
+                pacmanX -= pacmanVelocity;
+            }
+
+            if (openMouth) {
+                g.drawImage(pacmanOpenMouthImg, pacmanX, pacmanY, this);
+            } else {
+                g.drawImage(pacmanImg, pacmanX, pacmanY, this);
+            }
+
+            openMouth = !openMouth;
+
         } else if ("rule".equals(state)) {
             g.drawImage(rule, 0, 0, this);
         } else if ("ranking".equals(state)) {
@@ -61,12 +84,13 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         win = ImageIO.read(new File("resources/win.png")).getScaledInstance(1400,  800,  0);
         lose = ImageIO.read(new File("resources/lose.png")).getScaledInstance(1400,  800,  0);
 
-
-
+        openMouth = false;
+        pacmanOpenMouthImg = ImageIO.read(new File("resources/pacman_open_mouth.png")).getScaledInstance(25, 25, 0);
         pacmanImg = ImageIO.read(new File("resources/pacman.png")).getScaledInstance(25, 25, 0);
         pacmanX = 200;
         pacmanY = 200;
-        pacmanVelocity = 25;
+        pacmanVelocity = 50;
+        pacmanDirection = 1;
 
         JFrame frame = new JFrame("Pacman");
         JPanel panel = new App();
@@ -80,7 +104,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         while(true){
             // Setting up Frame Rate
             try {
-                Thread.sleep(20); // 50 frames per second
+                Thread.sleep(1000); // 1 frames per second
             }
             catch(InterruptedException e) {}
             // Drawing the Screen
@@ -101,9 +125,17 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     		else if(e.getKeyChar() == 'b') {
     			state = "ranking";
     		}
-    	}
-    	else if(state.equals("game")) {
-    		if (e.getKeyChar() == '-') {
+    	} else if(state.equals("game")) {
+
+            if (e.getKeyChar() == 'w') {
+                pacmanDirection = 0;
+            } else if (e.getKeyChar() == 'a') {
+                pacmanDirection = 3;
+            } else if (e.getKeyChar() == 's') {
+                pacmanDirection = 2;
+            } else if (e.getKeyChar() == 'd') {
+                pacmanDirection = 1;
+            } else if (e.getKeyChar() == '-') {
     			state = "win";
     		}
     		else if (e.getKeyChar() == '=') {
@@ -115,9 +147,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     }
     @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
+    public void keyReleased(KeyEvent e) {}
     @Override
     public void keyTyped(KeyEvent e) {}
 
@@ -158,9 +188,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                    state = "start";
                 }
         }
-        
-               
-
         	
        System.out.println(e.getX() + ", " + e.getY());
     
