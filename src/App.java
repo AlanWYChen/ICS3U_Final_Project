@@ -8,6 +8,13 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     public static String state = "start";
 
+    // top left = [100, 80] [155, 80]
+    // distance between two squares = 55
+    public char[][] mapArray = { {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
+                                 {' ', 'w', 'w', 'w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
+                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
+                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '} };
+
     public static Image start;
     public static Image game;
     public static Image rule;
@@ -19,13 +26,15 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static Image pacmanOpenMouthImg;
     public static int pacmanX;
     public static int pacmanY;
-    public static int pacmanVelocity;
+    public static int pacmanGridX;
+    public static int pacmanGridY;
+    public static double pacmanVelocity;
     // 0 = up, 1 = right, 2 = down, 3 = left
     public static int pacmanDirection;
     public static boolean openMouth;
 
     public App() {
-        setPreferredSize(new Dimension(1400, 800));
+        setPreferredSize(new Dimension(1400, 875));
         // KeyListener
         this.setFocusable(true);
         addKeyListener(this);
@@ -48,12 +57,32 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             // game logic
             if (pacmanDirection == 0) {
                 pacmanY -= pacmanVelocity;
+                pacmanGridY -= 1;
+                if (mapArray[pacmanGridX][pacmanGridY] == 'w') {
+                    pacmanY += pacmanVelocity;
+                    pacmanGridY += 1;
+                }
             } else if (pacmanDirection == 1) {
                 pacmanX += pacmanVelocity;
+                pacmanGridX += 1;
+                if (mapArray[pacmanGridX][pacmanGridY] == 'w') {
+                    pacmanX -= pacmanVelocity;
+                    pacmanGridX -= 1;
+                }
             } else if (pacmanDirection == 2) {
                 pacmanY += pacmanVelocity;
+                pacmanGridY += 1;
+                if (mapArray[pacmanGridX][pacmanGridY] == 'w') {
+                    pacmanY -= pacmanVelocity;
+                    pacmanGridY -= 1;
+                }
             } else if (pacmanDirection == 3) {
                 pacmanX -= pacmanVelocity;
+                pacmanGridX -= 1;
+                if (mapArray[pacmanGridX][pacmanGridY] == 'w') {
+                    pacmanX += pacmanVelocity;
+                    pacmanGridX += 1;
+                }
             }
 
             if (openMouth) {
@@ -77,19 +106,21 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     }
 
     public static void main(String[] args) throws IOException {
-        game = ImageIO.read(new File("resources/background.png")).getScaledInstance(1400, 800, 0);
-        start = ImageIO.read(new File("resources/start.png")).getScaledInstance(1400, 800, 0);
-        rule = ImageIO.read(new File("resources/rule.png")).getScaledInstance(1400, 800, 0);
-        ranking = ImageIO.read(new File("resources/ranking.png")).getScaledInstance(1400,  800,  0);
-        win = ImageIO.read(new File("resources/win.png")).getScaledInstance(1400,  800,  0);
-        lose = ImageIO.read(new File("resources/lose.png")).getScaledInstance(1400,  800,  0);
+        game = ImageIO.read(new File("resources/background.png")).getScaledInstance(1400, 875, 0);
+        start = ImageIO.read(new File("resources/start.png")).getScaledInstance(1400, 875, 0);
+        rule = ImageIO.read(new File("resources/rule.png")).getScaledInstance(1400, 875, 0);
+        ranking = ImageIO.read(new File("resources/ranking.png")).getScaledInstance(1400, 875, 0);
+        win = ImageIO.read(new File("resources/win.png")).getScaledInstance(1400, 875, 0);
+        lose = ImageIO.read(new File("resources/lose.png")).getScaledInstance(1400, 875, 0);
 
         openMouth = false;
         pacmanOpenMouthImg = ImageIO.read(new File("resources/pacman_open_mouth.png")).getScaledInstance(25, 25, 0);
         pacmanImg = ImageIO.read(new File("resources/pacman.png")).getScaledInstance(25, 25, 0);
-        pacmanX = 200;
-        pacmanY = 200;
-        pacmanVelocity = 50;
+        pacmanX = 90;
+        pacmanY = 70;
+        pacmanGridX = 0;
+        pacmanGridY = 0;
+        pacmanVelocity = 55;
         pacmanDirection = 1;
 
         JFrame frame = new JFrame("Pacman");
@@ -156,20 +187,20 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
         if (state.equals("start")) {
 
-            if (340 <= e.getX() && e.getX() <= 500 &&
-                564 <= e.getY() && e.getY() <= 600) {
+            
+            if (340 <= e.getX() && e.getX() <= 510 &&
+                610 <= e.getY() && e.getY() <= 660) {
                 state = "game";
             }
-            if (591 <= e.getX() && e.getX() <= 776 &&
-                552 <= e.getY() && e.getY() <= 616) {
+            if (600 <= e.getX() && e.getX() <= 770 &&
+                610 <= e.getY() && e.getY() <= 660) {
                     state = "rule";
             }
-            if (883 <= e.getX() && e.getX() <= 1073 &&
-            	553 <= e.getY() && e.getY() <= 617) {
+            if (800 <= e.getX() && e.getX() <= 1070 &&
+            	600 <= e.getY() && e.getY() <= 660) {
             	state = "ranking";
             	
-            }
-                
+            }                
 
         }
 
