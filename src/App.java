@@ -77,7 +77,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     }
 
     public static void main(String[] args) throws IOException {
-        game = ImageIO.read(new File("resources/game.png")).getScaledInstance(1400, 800, 0);
+        game = ImageIO.read(new File("resources/background.png")).getScaledInstance(1400, 800, 0);
         start = ImageIO.read(new File("resources/start.png")).getScaledInstance(1400, 800, 0);
         rule = ImageIO.read(new File("resources/rule.png")).getScaledInstance(1400, 800, 0);
         ranking = ImageIO.read(new File("resources/ranking.png")).getScaledInstance(1400,  800,  0);
