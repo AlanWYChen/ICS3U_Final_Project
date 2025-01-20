@@ -73,6 +73,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         } else if ("game".equals(state)) {
             g.drawImage(game, 0, 0, this);
 
+            System.out.println('(' + pacmanGridX + ", "  + pacmanGridY + ')');
+
             // game logic
             if (pacmanDirection == 0) {
                 pacmanY -= pacmanVelocity;
