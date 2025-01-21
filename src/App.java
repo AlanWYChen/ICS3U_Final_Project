@@ -124,9 +124,13 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             g.drawImage(rule, 0, 0, this);
         } else if ("ranking".equals(state)) {
             g.drawImage(ranking,0,0, this);
-            g.setColor(new Color(0, 255, 0));
+            g.setColor(new Color(0, 0, 0));
             g.setFont(new Font("Arial", Font.PLAIN, 30));
             g.drawString("abc test test yes yes", 600, 300);
+            g.drawString("abc test test yes yes", 600, 390);
+            g.drawString("abc test test yes yes", 600, 480);
+            g.drawString("abc test test yes yes", 600, 570);
+            g.drawString("abc test test yes yes", 600, 660);
             g.setColor(new Color(0, 0, 0));
         } else if ("win".equals(state)) {
         	 g.drawImage(win,0,0, this);
