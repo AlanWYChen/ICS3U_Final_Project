@@ -368,15 +368,87 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     }
 
                     if (pacmanGridX == ghost1GridX && pacmanGridY == ghost1GridY) {
-                        state = "lose";                    
+                        state = "lose";
+                        num = 0;
+                        frameCount = 0;
+                        pacmanGridX = 1;
+                        pacmanGridY = 1;
+                        pacmanX = 80;
+                        pacmanY = 70;
+
+
+                        ghost1GridX = 23;
+                        ghost1GridY = 1;
+                        ghost1X = 80 + ((ghost1GridX - 1) * 55);
+                        ghost1Y = 70 + ((ghost1GridY - 1) * 55);
+
+
+                        ghost2GridX = 23;
+                        ghost2GridY = 14;
+                        ghost2X = 80 + ((ghost2GridX - 1) * 55);
+                        ghost2Y = 70 + ((ghost2GridY - 1) * 55);
+
+
+                        ghost3GridX = 1;
+                        ghost3GridY = 14;
+                        ghost3X = 80 + ((ghost3GridX - 1) * 55);
+                        ghost3Y = 70 + ((ghost3GridY - 1) * 55);                    
                     }
 
                     if (pacmanGridX == ghost2GridX && pacmanGridY == ghost2GridY) {
-                        state = "lose";                    
+                        state = "lose"; 
+                        num = 0;
+                        frameCount = 0;
+                        pacmanGridX = 1;
+                        pacmanGridY = 1;
+                        pacmanX = 80;
+                        pacmanY = 70;
+
+
+                        ghost1GridX = 23;
+                        ghost1GridY = 1;
+                        ghost1X = 80 + ((ghost1GridX - 1) * 55);
+                        ghost1Y = 70 + ((ghost1GridY - 1) * 55);
+
+
+                        ghost2GridX = 23;
+                        ghost2GridY = 14;
+                        ghost2X = 80 + ((ghost2GridX - 1) * 55);
+                        ghost2Y = 70 + ((ghost2GridY - 1) * 55);
+
+
+                        ghost3GridX = 1;
+                        ghost3GridY = 14;
+                        ghost3X = 80 + ((ghost3GridX - 1) * 55);
+                        ghost3Y = 70 + ((ghost3GridY - 1) * 55);                   
                     }
 
                     if (pacmanGridX == ghost3GridX && pacmanGridY == ghost3GridY) {
-                        state = "lose";                    
+                        state = "lose";   
+                        num = 0;
+                        frameCount = 0;
+                        pacmanGridX = 1;
+                        pacmanGridY = 1;
+                        pacmanX = 80;
+                        pacmanY = 70;
+
+
+                        ghost1GridX = 23;
+                        ghost1GridY = 1;
+                        ghost1X = 80 + ((ghost1GridX - 1) * 55);
+                        ghost1Y = 70 + ((ghost1GridY - 1) * 55);
+
+
+                        ghost2GridX = 23;
+                        ghost2GridY = 14;
+                        ghost2X = 80 + ((ghost2GridX - 1) * 55);
+                        ghost2Y = 70 + ((ghost2GridY - 1) * 55);
+
+
+                        ghost3GridX = 1;
+                        ghost3GridY = 14;
+                        ghost3X = 80 + ((ghost3GridX - 1) * 55);
+                        ghost3Y = 70 + ((ghost3GridY - 1) * 55);                 
                     }
 
                     if (pacmanGridX == fruitGridX && pacmanGridY == fruitGridY) {
@@ -385,13 +457,35 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
                     openMouth = !openMouth;
 
-                    if(num == 1) {
+                    if(num == 2) {
                         state = "win";
                         num = 0;
                         try {
                             writeScoreToLeaderboard();
                         } catch (IOException ex) {}
                         frameCount = 0;
+                        pacmanGridX = 1;
+                        pacmanGridY = 1;
+                        pacmanX = 80;
+                        pacmanY = 70;
+
+
+                        ghost1GridX = 23;
+                        ghost1GridY = 1;
+                        ghost1X = 80 + ((ghost1GridX - 1) * 55);
+                        ghost1Y = 70 + ((ghost1GridY - 1) * 55);
+
+
+                        ghost2GridX = 23;
+                        ghost2GridY = 14;
+                        ghost2X = 80 + ((ghost2GridX - 1) * 55);
+                        ghost2Y = 70 + ((ghost2GridY - 1) * 55);
+
+
+                        ghost3GridX = 1;
+                        ghost3GridY = 14;
+                        ghost3X = 80 + ((ghost3GridX - 1) * 55);
+                        ghost3Y = 70 + ((ghost3GridY - 1) * 55);
                     }
 
                     frameCount++;
