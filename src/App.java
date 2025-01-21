@@ -126,11 +126,23 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             g.drawImage(ranking,0,0, this);
             g.setColor(new Color(0, 0, 0));
             g.setFont(new Font("Arial", Font.PLAIN, 30));
-            g.drawString("abc test test yes yes", 600, 300);
-            g.drawString("abc test test yes yes", 600, 390);
-            g.drawString("abc test test yes yes", 600, 480);
-            g.drawString("abc test test yes yes", 600, 570);
-            g.drawString("abc test test yes yes", 600, 660);
+            ArrayList<Double> leaderboard = top5Leaderboard();
+
+            if (leaderboard.size() > 0) {
+                g.drawString(Double.toString(leaderboard.get(0)), 600, 300);
+            }
+            if (leaderboard.size() > 1) {
+                g.drawString(Double.toString(leaderboard.get(1)), 600, 390);
+            }
+            if (leaderboard.size() > 2) {
+                g.drawString(Double.toString(leaderboard.get(2)), 600, 480);
+            }
+            if (leaderboard.size() > 3) {
+                g.drawString(Double.toString(leaderboard.get(3)), 600, 570);
+            }
+            if (leaderboard.size() > 4) {
+                g.drawString(Double.toString(leaderboard.get(4)), 600, 660);
+            }
             g.setColor(new Color(0, 0, 0));
         } else if ("win".equals(state)) {
         	 g.drawImage(win,0,0, this);
@@ -514,11 +526,14 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     }
 
-    public static ArrayList<Double> top5Leaderboard() throws FileNotFoundException, IOException {
+    public static ArrayList<Double> top5Leaderboard() {
         ArrayList<Double> values = new ArrayList<>();
         String csvFile = "leaderboard.csv"; 
         String line;
+        ArrayList<Double> topfive = new ArrayList<>();
 
+        try {
+            
         BufferedReader br = new BufferedReader(new FileReader(csvFile));
         
         while ((line = br.readLine()) != null) {
@@ -532,11 +547,10 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         // Sort in descending order
         values.sort(Collections.reverseOrder());
 
-        ArrayList<Double> topfive = new ArrayList<>();
-
         for (int i = 0; i < Math.min(5, values.size()); i++) {
             topfive.add(values.get(i));
         }
+        } catch (Exception e) {}
 
         return topfive;
 
