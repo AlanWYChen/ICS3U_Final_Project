@@ -115,7 +115,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             }
 
             g.drawImage(ghost1Img, ghost1X, ghost1Y, this);
-            g.drawImage(ghost2Img, ghost2X, ghost3Y, this);
+            g.drawImage(ghost2Img, ghost2X, ghost2Y, this);
             g.drawImage(ghost3Img, ghost3X, ghost3Y, this);
 
 
@@ -123,6 +123,10 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             g.drawImage(rule, 0, 0, this);
         } else if ("ranking".equals(state)) {
             g.drawImage(ranking,0,0, this);
+            g.setColor(new Color(0, 255, 0));
+            g.setFont(new Font("Arial", Font.PLAIN, 30));
+            g.drawString("abc test test yes yes", 600, 300);
+            g.setColor(new Color(0, 0, 0));
         } else if ("win".equals(state)) {
         	 g.drawImage(win,0,0, this);
         } else if ("lose".equals(state)) {
@@ -146,7 +150,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         pacmanY = 70;
         pacmanGridX = 1;
         pacmanGridY = 1;
-        pacmanVelocity = 2;
+        pacmanVelocity = 55;
         pacmanDirection = 1;
 
         ghost1Img = ImageIO.read(new File("resources/ghost1.png")).getScaledInstance(25, 25, 0);
@@ -193,8 +197,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             try {
                 
                 if (state == "game") {
-
-                    System.out.println(ghost2GridX + ", " + ghost2GridY);
 
                     if (pacmanGridX > ghost1GridX && mapArray[ghost1GridY][ghost1GridX + 1] != 'w') {
                         ghost1Direction = 1;
@@ -367,8 +369,11 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
                     openMouth = !openMouth;
 
-                    if(num == 4){
+                    if(num == 1) {
                         state = "win";
+                        try {
+                            writeScoreToLeaderboard();
+                        } catch (IOException ex) {}
                     }
 
                     frameCount++;
@@ -492,6 +497,15 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             }
         }
 
+    }
+
+    public static void writeScoreToLeaderboard() throws IOException {
+
+        PrintWriter pw = new PrintWriter(new FileWriter("leaderboard.csv", true));
+
+        pw.println(100 / ((double) Math.sqrt(frameCount)));
+
+        pw.close();
 
     }
     
