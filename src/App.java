@@ -380,14 +380,14 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     }
 
                     if (pacmanGridX == fruitGridX && pacmanGridY == fruitGridY) {
-                        // 设置椰子的新位置
                         spawnNewFruit();
                     }
 
                     openMouth = !openMouth;
 
-                    if(num == 1) {
+                    if(num == 5) {
                         state = "win";
+                        num = 0;
                         try {
                             writeScoreToLeaderboard();
                         } catch (IOException ex) {}
