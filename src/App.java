@@ -9,30 +9,27 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static String state = "start";
 
     // top left = [100, 80] [155, 80]
+    // 25 x 16
     // distance between two squares = 55
-    public char[][] mapArray = { {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w'}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w'}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w'}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w'}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', ' '},
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w'}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},  
-                                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '} };
+    public static char[][] mapArray = 
+        { 
+            {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'}, 
+            {'w', ' ', ' ', ' ', 'w', ' ', 'w', ' ', 'w', 'w', 'w', 'w', ' ', 'w', 'w', 'w', 'w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'}, 
+            {'w', ' ', 'w', ' ', 'w', ' ', ' ', ' ', 'w', 'w', 'w', 'w', ' ', 'w', 'w', 'w', 'w', ' ', 'w', ' ', 'w', 'w', 'w', ' ', 'w'},  
+            {'w', ' ', 'w', ' ', ' ', ' ', 'w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', ' ', 'w', 'w', 'w', ' ', 'w'}, 
+            {'w', ' ', 'w', ' ', 'w', 'w', 'w', 'w', 'w', ' ', 'w', ' ', 'w', 'w', ' ', 'w', 'w', ' ', 'w', ' ', 'w', 'w', 'w', ' ', 'w'}, 
+            {'w', ' ', 'w', ' ', ' ', ' ', ' ', ' ', 'w', ' ', 'w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', ' ', 'w', 'w', 'w', ' ', 'w'}, 
+            {'w', ' ', 'w', 'w', 'w', 'w', 'w', ' ', 'w', ' ', 'w', 'w', 'w', 'w', 'w', ' ', 'w', ' ', 'w', ' ', ' ', ' ', ' ', ' ', 'w'}, 
+            {'w', ' ', 'w', ' ', ' ', ' ', ' ', ' ', 'w', ' ', 'w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w', 'w', ' ', 'w'}, 
+            {'w', ' ', 'w', ' ', 'w', 'w', 'w', ' ', 'w', ' ', 'w', ' ', 'w', 'w', 'w', 'w', 'w', ' ', 'w', ' ', 'w', 'w', 'w', ' ', 'w'},
+            {'w', ' ', ' ', ' ', 'w', 'w', 'w', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w', 'w', ' ', ' ', 'w', ' ', 'w', 'w', ' ', ' ', 'w'}, 
+            {'w', ' ', 'w', 'w', 'w', 'w', 'w', ' ', 'w', ' ', 'w', 'w', ' ', ' ', 'w', ' ', ' ', ' ', 'w', ' ', 'w', 'w', 'w', ' ', 'w'}, 
+            {'w', ' ', 'w', ' ', 'w', 'w', 'w', ' ', 'w', ' ', 'w', 'w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w', 'w', ' ', 'w'}, 
+            {'w', ' ', 'w', ' ', 'w', 'w', 'w', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w', 'w', 'w', ' ', 'w', ' ', ' ', ' ', ' ', ' ', 'w'},
+            {'w', ' ', 'w', ' ', ' ', ' ', ' ', ' ', 'w', 'w', 'w', 'w', ' ', 'w', 'w', 'w', 'w', ' ', 'w', 'w', 'w', 'w', 'w', ' ', 'w'}, 
+            {'w', ' ', ' ', ' ', 'w', 'w', 'w', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'w', 'w', 'w', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w'}, 
+            {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'} 
+        };
 
     public static Image start;
     public static Image game;
@@ -51,6 +48,42 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     // 0 = up, 1 = right, 2 = down, 3 = left
     public static int pacmanDirection;
     public static boolean openMouth;
+
+    public static Image ghost1Img;
+    public static int ghost1X;
+    public static int ghost1Y;
+    public static int ghost1GridX;
+    public static int ghost1GridY;
+    public static double ghost1Velocity;
+    // 0 = up, 1 = right, 2 = down, 3 = left
+    public static int ghost1Direction;
+
+    public static Image ghost2Img;
+    public static int ghost2X;
+    public static int ghost2Y;
+    public static int ghost2GridX;
+    public static int ghost2GridY;
+    public static double ghost2Velocity;
+    // 0 = up, 1 = right, 2 = down, 3 = left
+    public static int ghost2Direction;
+
+    public static Image ghost3Img;
+    public static int ghost3X;
+    public static int ghost3Y;
+    public static int ghost3GridX;
+    public static int ghost3GridY;
+    public static double ghost3Velocity;
+    // 0 = up, 1 = right, 2 = down, 3 = left
+    public static int ghost3Direction;
+
+    public static Image fruitImg;
+    public static int fruitX;
+    public static int fruitY;
+    public static int fruitGridX;
+    public static int fruitGridY;
+    public static int num = 0;
+
+    public static int frameCount = 0;
 
     public App() {
         setPreferredSize(new Dimension(1400, 875));
@@ -73,38 +106,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         } else if ("game".equals(state)) {
             g.drawImage(game, 0, 0, this);
 
-            System.out.println('(' + pacmanGridX + ", "  + pacmanGridY + ')');
-
-            // game logic
-            if (pacmanDirection == 0) {
-                pacmanY -= pacmanVelocity;
-                pacmanGridY -= 1;
-                if (mapArray[pacmanGridX][pacmanGridY] == 'w') {
-                    pacmanY += pacmanVelocity;
-                    pacmanGridY += 1;
-                }
-            } else if (pacmanDirection == 1) {
-                pacmanX += pacmanVelocity;
-                pacmanGridX += 1;
-                if (mapArray[pacmanGridX][pacmanGridY] == 'w') {
-                    pacmanX -= pacmanVelocity;
-                    pacmanGridX -= 1;
-                }
-            } else if (pacmanDirection == 2) {
-                pacmanY += pacmanVelocity;
-                pacmanGridY += 1;
-                if (mapArray[pacmanGridX][pacmanGridY] == 'w') {
-                    pacmanY -= pacmanVelocity;
-                    pacmanGridY -= 1;
-                }
-            } else if (pacmanDirection == 3) {
-                pacmanX -= pacmanVelocity;
-                pacmanGridX -= 1;
-                if (mapArray[pacmanGridX][pacmanGridY] == 'w') {
-                    pacmanX += pacmanVelocity;
-                    pacmanGridX += 1;
-                }
-            }
+            g.drawImage(fruitImg, fruitX, fruitY, this);
 
             if (openMouth) {
                 g.drawImage(pacmanOpenMouthImg, pacmanX, pacmanY, this);
@@ -112,7 +114,10 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 g.drawImage(pacmanImg, pacmanX, pacmanY, this);
             }
 
-            openMouth = !openMouth;
+            g.drawImage(ghost1Img, ghost1X, ghost1Y, this);
+            g.drawImage(ghost2Img, ghost2X, ghost3Y, this);
+            g.drawImage(ghost3Img, ghost3X, ghost3Y, this);
+
 
         } else if ("rule".equals(state)) {
             g.drawImage(rule, 0, 0, this);
@@ -137,12 +142,42 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         openMouth = false;
         pacmanOpenMouthImg = ImageIO.read(new File("resources/pacman_open_mouth.png")).getScaledInstance(25, 25, 0);
         pacmanImg = ImageIO.read(new File("resources/pacman.png")).getScaledInstance(25, 25, 0);
-        pacmanX = 90;
+        pacmanX = 80;
         pacmanY = 70;
-        pacmanGridX = 0;
-        pacmanGridY = 0;
-        pacmanVelocity = 55;
+        pacmanGridX = 1;
+        pacmanGridY = 1;
+        pacmanVelocity = 2;
         pacmanDirection = 1;
+
+        ghost1Img = ImageIO.read(new File("resources/ghost1.png")).getScaledInstance(25, 25, 0);
+        ghost1GridX = 23;
+        ghost1GridY = 1;
+        ghost1X = 80 + ((ghost1GridX - 1) * 55);
+        ghost1Y = 70 + ((ghost1GridY - 1) * 55);
+        ghost1Velocity = 55;
+        ghost1Direction = 1;
+
+        ghost2Img = ImageIO.read(new File("resources/ghost2.png")).getScaledInstance(25, 25, 0);
+        ghost2GridX = 23;
+        ghost2GridY = 14;
+        ghost2X = 80 + ((ghost2GridX - 1) * 55);
+        ghost2Y = 70 + ((ghost2GridY - 1) * 55);
+        ghost2Velocity = 55;
+        ghost2Direction = 1;
+
+        ghost3Img = ImageIO.read(new File("resources/ghost3.png")).getScaledInstance(25, 25, 0);
+        ghost3GridX = 1;
+        ghost3GridY = 14;
+        ghost3X = 80 + ((ghost3GridX - 1) * 55);
+        ghost3Y = 70 + ((ghost3GridY - 1) * 55);
+        ghost3Velocity = 55;
+        ghost3Direction = 1;
+
+        fruitImg = ImageIO.read(new File("resources/coconut.png")).getScaledInstance(25, 25, 0);
+        fruitGridX = 1;
+        fruitGridY = 3;
+        fruitX = 80 + ((fruitGridX - 1) * 55);
+        fruitY = 70 + ((fruitGridY - 1) * 55);
 
         JFrame frame = new JFrame("Pacman");
         JPanel panel = new App();
@@ -156,7 +191,191 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         while(true){
             // Setting up Frame Rate
             try {
-                Thread.sleep(1000); // 1 frames per second
+                
+                if (state == "game") {
+
+                    System.out.println(ghost2GridX + ", " + ghost2GridY);
+
+                    if (pacmanGridX > ghost1GridX && mapArray[ghost1GridY][ghost1GridX + 1] != 'w') {
+                        ghost1Direction = 1;
+                    } else if (pacmanGridX < ghost1GridX && mapArray[ghost1GridY][ghost1GridX - 1] != 'w') {
+                        ghost1Direction = 3;
+                    } else if (pacmanGridY < ghost1GridY && mapArray[ghost1GridY - 1][ghost1GridX] != 'w') {
+                        ghost1Direction = 0;
+                    } else {
+                        ghost1Direction = 2;
+                    }
+
+                    if (pacmanGridX > ghost2GridX && mapArray[ghost2GridY][ghost2GridX + 1] != 'w') {
+                        ghost2Direction = 1;
+                    } else if (pacmanGridX < ghost2GridX && mapArray[ghost2GridY][ghost2GridX - 1] != 'w') {
+                        ghost2Direction = 3;
+                    } else if (pacmanGridY < ghost2GridY && mapArray[ghost2GridY - 1][ghost2GridX] != 'w') {
+                        ghost2Direction = 0;
+                    } else {
+                        ghost2Direction = 2;
+                    }
+
+                    if (pacmanGridX > ghost3GridX && mapArray[ghost3GridY][ghost3GridX + 1] != 'w') {
+                        ghost3Direction = 1;
+                    } else if (pacmanGridX < ghost3GridX && mapArray[ghost3GridY][ghost3GridX - 1] != 'w') {
+                        ghost3Direction = 3;
+                    } else if (pacmanGridY < ghost3GridY && mapArray[ghost3GridY - 1][ghost3GridX] != 'w') {
+                        ghost3Direction = 0;
+                    } else {
+                        ghost3Direction = 2;
+                    }
+
+                    // game logic
+                    if (pacmanDirection == 0) {
+                        pacmanY -= pacmanVelocity;
+                        pacmanGridY -= 1;
+                        if (mapArray[pacmanGridY][pacmanGridX] == 'w') {
+                            pacmanY += pacmanVelocity;
+                            pacmanGridY += 1;
+                        }
+                    } else if (pacmanDirection == 1) {
+                        pacmanGridX += 1;
+                        pacmanX += pacmanVelocity;
+
+                        if (mapArray[pacmanGridY][pacmanGridX] == 'w') {
+                            pacmanGridX -= 1;
+                            pacmanX -= pacmanVelocity;
+                        }
+                    } else if (pacmanDirection == 2) {
+                        pacmanGridY += 1;
+                        pacmanY += pacmanVelocity;
+                        if (mapArray[pacmanGridY][pacmanGridX] == 'w') {
+                            pacmanY -= pacmanVelocity;
+                            pacmanGridY -= 1;
+                        }
+                    } else if (pacmanDirection == 3) {
+                        pacmanGridX -= 1;
+                        pacmanX -= pacmanVelocity;
+                        if (mapArray[pacmanGridY][pacmanGridX] == 'w') {
+                            pacmanX += pacmanVelocity;
+                            pacmanGridX += 1;
+                        }
+                    }
+
+                    if (ghost1Direction == 0) {
+                        ghost1GridY -= 1;
+                        ghost1Y -= ghost1Velocity;
+                        if (mapArray[ghost1GridY][ghost1GridX] == 'w') {
+                            ghost1Y += ghost1Velocity;
+                            ghost1GridY += 1;
+                        }
+                    } else if (ghost1Direction == 1) {
+                        ghost1GridX += 1;
+                        ghost1X += ghost1Velocity;
+                        if (mapArray[ghost1GridY][ghost1GridX] == 'w') {
+                            ghost1X -= ghost1Velocity;
+                            ghost1GridX -= 1;
+                        }
+                    } else if (ghost1Direction == 2) {
+                        ghost1GridY += 1;
+                        ghost1Y += ghost1Velocity;
+                        if (mapArray[ghost1GridY][ghost1GridX] == 'w') {
+                            ghost1Y -= ghost1Velocity;
+                            ghost1GridY -= 1;
+                        }
+                    } else if (ghost1Direction == 3) {
+                        ghost1GridX -= 1;
+                        ghost1X -= ghost1Velocity;
+                        if (mapArray[ghost1GridY][ghost1GridX] == 'w') {
+                            ghost1X += ghost1Velocity;
+                            ghost1GridX += 1;
+                        }
+                    }
+
+                    if (ghost2Direction == 0) {
+                        ghost2GridY -= 1;
+                        ghost2Y -= ghost2Velocity;
+                        if (mapArray[ghost2GridY][ghost2GridX] == 'w') {
+                            ghost2Y += ghost2Velocity;
+                            ghost2GridY += 1;
+                        }
+                    } else if (ghost2Direction == 1) {
+                        ghost2GridX += 1;
+                        ghost2X += ghost2Velocity;
+                        if (mapArray[ghost2GridY][ghost2GridX] == 'w') {
+                            ghost2X -= ghost2Velocity;
+                            ghost2GridX -= 1;
+                        }
+                    } else if (ghost2Direction == 2) {
+                        ghost2GridY += 1;
+                        ghost2Y += ghost2Velocity;
+                        if (mapArray[ghost2GridY][ghost2GridX] == 'w') {
+                            ghost2Y -= ghost2Velocity;
+                            ghost2GridY -= 1;
+                        }
+                    } else if (ghost2Direction == 3) {
+                        ghost2GridX -= 1;
+                        ghost2X -= ghost2Velocity;
+                        if (mapArray[ghost2GridY][ghost2GridX] == 'w') {
+                            ghost2X += ghost2Velocity;
+                            ghost2GridX += 1;
+                        }
+                    }
+
+                    if (ghost3Direction == 0) {
+                        ghost3GridY -= 1;
+                        ghost3Y -= ghost3Velocity;
+                        if (mapArray[ghost3GridY][ghost3GridX] == 'w') {
+                            ghost3Y += ghost3Velocity;
+                            ghost3GridY += 1;
+                        }
+                    } else if (ghost3Direction == 1) {
+                        ghost3GridX += 1;
+                        ghost3X += ghost3Velocity;
+                        if (mapArray[ghost3GridY][ghost3GridX] == 'w') {
+                            ghost3X -= ghost3Velocity;
+                            ghost3GridX -= 1;
+                        }
+                    } else if (ghost3Direction == 2) {
+                        ghost3GridY += 1;
+                        ghost3Y += ghost3Velocity;
+                        if (mapArray[ghost3GridY][ghost3GridX] == 'w') {
+                            ghost3Y -= ghost3Velocity;
+                            ghost3GridY -= 1;
+                        }
+                    } else if (ghost3Direction == 3) {
+                        ghost3GridX -= 1;
+                        ghost3X -= ghost3Velocity;
+                        if (mapArray[ghost3GridY][ghost3GridX] == 'w') {
+                            ghost3X += ghost3Velocity;
+                            ghost3GridX += 1;
+                        }
+                    }
+
+                    if (pacmanGridX == ghost1GridX && pacmanGridY == ghost1GridY) {
+                        state = "lose";                    
+                    }
+
+                    if (pacmanGridX == ghost2GridX && pacmanGridY == ghost2GridY) {
+                        state = "lose";                    
+                    }
+
+                    if (pacmanGridX == ghost3GridX && pacmanGridY == ghost3GridY) {
+                        state = "lose";                    
+                    }
+
+                    if (pacmanGridX == fruitGridX && pacmanGridY == fruitGridY) {
+                        // 设置椰子的新位置
+                        spawnNewFruit();
+                    }
+
+                    openMouth = !openMouth;
+
+                    if(num == 4){
+                        state = "win";
+                    }
+
+                    frameCount++;
+
+                }
+
+                Thread.sleep(500);
             }
             catch(InterruptedException e) {}
             // Drawing the Screen
@@ -169,7 +388,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     
     @Override
     public void keyPressed(KeyEvent e) {
-    	System.out.println(state);
     	if(state.equals("start")) {
     		if (e.getKeyChar() == 'a') {
     			state = "rule";
@@ -256,6 +474,27 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     @Override
     public void mouseExited(MouseEvent e) {}
+
+    // return GridX,GridY
+    public static void spawnNewFruit() {
+
+        while (true) {
+            int x = (int) (Math.random() * 25); // 0 - 24
+            int y = (int) (Math.random() * 16); // 0 - 15
+
+            if (mapArray[y][x] != 'w') {
+                fruitGridX = x;
+                fruitGridY = y;
+                fruitX = 80 + ((fruitGridX - 1) * 55);
+                fruitY = 70 + ((fruitGridY - 1) * 55);
+                num += 1;
+                break;
+            }
+        }
+
+
+    }
+    
 
 }
 
