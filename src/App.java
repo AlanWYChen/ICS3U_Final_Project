@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -506,6 +507,34 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         pw.println(100 / ((double) Math.sqrt(frameCount)));
 
         pw.close();
+
+    }
+
+    public static ArrayList<Double> top5Leaderboard() throws FileNotFoundException, IOException {
+        ArrayList<Double> values = new ArrayList<>();
+        String csvFile = "leaderboard.csv"; 
+        String line;
+
+        BufferedReader br = new BufferedReader(new FileReader(csvFile));
+        
+        while ((line = br.readLine()) != null) {
+            // Assuming the CSV has one double per line
+            try {
+                double value = Double.parseDouble(line.trim());
+                values.add(value);
+            } catch (NumberFormatException e) {}
+        }
+
+        // Sort in descending order
+        values.sort(Collections.reverseOrder());
+
+        ArrayList<Double> topfive = new ArrayList<>();
+
+        for (int i = 0; i < Math.min(5, values.size()); i++) {
+            topfive.add(values.get(i));
+        }
+
+        return topfive;
 
     }
     
