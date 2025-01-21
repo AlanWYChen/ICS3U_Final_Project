@@ -391,6 +391,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                         try {
                             writeScoreToLeaderboard();
                         } catch (IOException ex) {}
+                        frameCount = 0;
                     }
 
                     frameCount++;
