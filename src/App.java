@@ -388,14 +388,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     if(num == 1) {
                         state = "win";
                         num = 0;
-                        pacmanGridX = 1;
-                        pacmanGridY = 1;
-                        ghost1GridX = 23;
-                        ghost1GridY = 1;
-                        ghost3GridX = 1;
-                        ghost3GridY = 14;
-                        ghost2GridX = 23;
-                        ghost2GridY = 14;
                         try {
                             writeScoreToLeaderboard();
                         } catch (IOException ex) {}
