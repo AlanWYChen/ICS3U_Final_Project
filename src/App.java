@@ -434,6 +434,16 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         		state = "lose";
         	}
     	}
+        else if(state.equals("win")){
+            if(e.getKeyChar() == 'l'){
+                state = "start";
+            }
+        }
+        else if(state.equals("lose")){
+            if(e.getKeyChar() == 'l'){
+                state = "start";
+            }
+        }
 
     	
 
