@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import javax.imageio.ImageIO;
@@ -7,6 +8,7 @@ import javax.swing.*;
 
 public class App extends JPanel implements KeyListener, Runnable, MouseListener {
 
+    // start, game, rule, ranking, win, lose
     public static String state = "start";
 
     // top left = [100, 80] [155, 80]
@@ -32,15 +34,17 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'} 
         };
 
-    public static Image start;
-    public static Image game;
-    public static Image rule;
-    public static Image ranking;
-    public static Image win;
-    public static Image lose;
-
-    public static Image pacmanImg;
-    public static Image pacmanOpenMouthImg;
+    // state: backgrounds
+    public static BufferedImage start;
+    public static BufferedImage game;
+    public static BufferedImage rule;
+    public static BufferedImage ranking;
+    public static BufferedImage win;
+    public static BufferedImage lose;
+    
+    // 糖豆人的图片，屏幕上的位置，mapArray里的位置，速度，朝向，张不张嘴
+    public static BufferedImage pacmanImg;
+    public static BufferedImage pacmanOpenMouthImg;
     public static int pacmanX;
     public static int pacmanY;
     public static int pacmanGridX;
@@ -50,7 +54,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static int pacmanDirection;
     public static boolean openMouth;
 
-    public static Image ghost1Img;
+    // 鬼1的图片，屏幕上的位置，mapArray里的位置，速度，朝向
+    public static BufferedImage ghost1Img;
     public static int ghost1X;
     public static int ghost1Y;
     public static int ghost1GridX;
@@ -59,7 +64,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     // 0 = up, 1 = right, 2 = down, 3 = left
     public static int ghost1Direction;
 
-    public static Image ghost2Img;
+    // 鬼2的图片，屏幕上的位置，mapArray里的位置，速度，朝向
+    public static BufferedImage ghost2Img;
     public static int ghost2X;
     public static int ghost2Y;
     public static int ghost2GridX;
@@ -68,7 +74,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     // 0 = up, 1 = right, 2 = down, 3 = left
     public static int ghost2Direction;
 
-    public static Image ghost3Img;
+    // 鬼3的图片，屏幕上的位置，mapArray里的位置，速度，朝向
+    public static BufferedImage ghost3Img;
     public static int ghost3X;
     public static int ghost3Y;
     public static int ghost3GridX;
@@ -77,15 +84,24 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     // 0 = up, 1 = right, 2 = down, 3 = left
     public static int ghost3Direction;
 
-    public static Image fruitImg;
+    // 椰子的图片，屏幕上的位置，mapArray里的位置
+    public static BufferedImage fruitImg;
     public static int fruitX;
     public static int fruitY;
     public static int fruitGridX;
     public static int fruitGridY;
+
+    // 吃了几个椰子
     public static int num = 0;
 
+    // 时间跨度：游戏时长
     public static int frameCount = 0;
 
+    // 设置基础参数
+    // 比如键盘要不要听
+    // 鼠标要不要听
+    // 最后开始游戏
+    // this == 本体
     public App() {
         setPreferredSize(new Dimension(1400, 875));
         // KeyListener
@@ -97,6 +113,9 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         thread.start();
     }
 
+    // 画画面
+    // 根据你现在的state，去画不同的东西
+    // 比如start，就只画开始界面/背景
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -140,17 +159,17 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         
     }
 
+    // 游戏的进入点：这里设置所有资源，例如图片和起始位置
     public static void main(String[] args) throws IOException {
-        game = ImageIO.read(new File("resources/background.png")).getScaledInstance(1400, 875, 0);
-        start = ImageIO.read(new File("resources/start.png")).getScaledInstance(1400, 875, 0);
-        rule = ImageIO.read(new File("resources/rule.png")).getScaledInstance(1400, 875, 0);
-        ranking = ImageIO.read(new File("resources/ranking.png")).getScaledInstance(1400, 875, 0);
-        win = ImageIO.read(new File("resources/win.png")).getScaledInstance(1400, 875, 0);
-        lose = ImageIO.read(new File("resources/lose.png")).getScaledInstance(1400, 875, 0);
-
+        game = ImageIO.read(new File("resources/background.png"));
+        start = ImageIO.read(new File("resources/start.png"));
+        rule = ImageIO.read(new File("resources/rule.png"));
+        ranking = ImageIO.read(new File("resources/ranking.png"));
+        win = ImageIO.read(new File("resources/win.png"));
+        lose = ImageIO.read(new File("resources/lose.png"));
         openMouth = false;
-        pacmanOpenMouthImg = ImageIO.read(new File("resources/pacman_open_mouth.png")).getScaledInstance(25, 25, 0);
-        pacmanImg = ImageIO.read(new File("resources/pacman.png")).getScaledInstance(25, 25, 0);
+        pacmanOpenMouthImg = ImageIO.read(new File("resources/pacman_open_mouth.png"));
+        pacmanImg = ImageIO.read(new File("resources/pacman.png"));
         pacmanX = 80;
         pacmanY = 70;
         pacmanGridX = 1;
@@ -158,7 +177,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         pacmanVelocity = 55;
         pacmanDirection = 1;
 
-        ghost1Img = ImageIO.read(new File("resources/ghost1.png")).getScaledInstance(25, 25, 0);
+        ghost1Img = ImageIO.read(new File("resources/ghost1.png"));
         ghost1GridX = 23;
         ghost1GridY = 1;
         ghost1X = 80 + ((ghost1GridX - 1) * 55);
@@ -166,7 +185,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         ghost1Velocity = 55;
         ghost1Direction = 1;
 
-        ghost2Img = ImageIO.read(new File("resources/ghost2.png")).getScaledInstance(25, 25, 0);
+        ghost2Img = ImageIO.read(new File("resources/ghost2.png"));
         ghost2GridX = 23;
         ghost2GridY = 14;
         ghost2X = 80 + ((ghost2GridX - 1) * 55);
@@ -174,7 +193,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         ghost2Velocity = 55;
         ghost2Direction = 1;
 
-        ghost3Img = ImageIO.read(new File("resources/ghost3.png")).getScaledInstance(25, 25, 0);
+        ghost3Img = ImageIO.read(new File("resources/ghost3.png"));
         ghost3GridX = 1;
         ghost3GridY = 14;
         ghost3X = 80 + ((ghost3GridX - 1) * 55);
@@ -182,12 +201,13 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         ghost3Velocity = 55;
         ghost3Direction = 1;
 
-        fruitImg = ImageIO.read(new File("resources/coconut.png")).getScaledInstance(25, 25, 0);
+        fruitImg = ImageIO.read(new File("resources/coconut.png"));
         fruitGridX = 1;
         fruitGridY = 3;
         fruitX = 80 + ((fruitGridX - 1) * 55);
         fruitY = 70 + ((fruitGridY - 1) * 55);
 
+        // 设置完资源之后，开始跑游戏
         JFrame frame = new JFrame("Pacman");
         JPanel panel = new App();
         frame.add(panel);
@@ -196,12 +216,13 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     }
 
+    // 每一帧都会跑一次的核心逻辑
     public void run() {
-        while(true){
-            // Setting up Frame Rate
-                
+        while(true){                
             if (state == "game") {
 
+                // 鬼1的朝向逻辑
+                // 始终往糖豆人的方向移动
                 if (pacmanGridX > ghost1GridX && mapArray[ghost1GridY][ghost1GridX + 1] != 'w') {
                     ghost1Direction = 1;
                 } else if (pacmanGridX < ghost1GridX && mapArray[ghost1GridY][ghost1GridX - 1] != 'w') {
@@ -211,7 +232,9 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 } else {
                     ghost1Direction = 2;
                 }
-
+                
+                // 鬼2的朝向逻辑
+                // 始终往糖豆人的方向移动
                 if (pacmanGridX > ghost2GridX && mapArray[ghost2GridY][ghost2GridX + 1] != 'w') {
                     ghost2Direction = 1;
                 } else if (pacmanGridX < ghost2GridX && mapArray[ghost2GridY][ghost2GridX - 1] != 'w') {
@@ -222,6 +245,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost2Direction = 2;
                 }
 
+                // 鬼3的朝向逻辑
+                // 始终往糖豆人的方向移动
                 if (pacmanGridX > ghost3GridX && mapArray[ghost3GridY][ghost3GridX + 1] != 'w') {
                     ghost3Direction = 1;
                 } else if (pacmanGridX < ghost3GridX && mapArray[ghost3GridY][ghost3GridX - 1] != 'w') {
@@ -232,7 +257,9 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost3Direction = 2;
                 }
 
-                // game logic
+                // 糖豆人的移动逻辑
+                // 利用面朝来决定下一帧的位置
+                // 包括撞墙就不动
                 if (pacmanDirection == 0) {
                     pacmanY -= pacmanVelocity;
                     pacmanGridY -= 1;
@@ -264,6 +291,9 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     }
                 }
 
+                // 鬼1的移动逻辑
+                // 利用面朝来决定下一帧的位置
+                // 包括撞墙就不动
                 if (ghost1Direction == 0) {
                     ghost1GridY -= 1;
                     ghost1Y -= ghost1Velocity;
@@ -294,6 +324,10 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     }
                 }
 
+                
+                // 鬼2的移动逻辑
+                // 利用面朝来决定下一帧的位置
+                // 包括撞墙就不动
                 if (ghost2Direction == 0) {
                     ghost2GridY -= 1;
                     ghost2Y -= ghost2Velocity;
@@ -324,6 +358,10 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     }
                 }
 
+
+                // 鬼3的移动逻辑
+                // 利用面朝来决定下一帧的位置
+                // 包括撞墙就不动
                 if (ghost3Direction == 0) {
                     ghost3GridY -= 1;
                     ghost3Y -= ghost3Velocity;
@@ -354,6 +392,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     }
                 }
 
+                // 糖豆人被鬼1撞到
                 if (pacmanGridX == ghost1GridX && pacmanGridY == ghost1GridY) {
                     state = "lose";
                     num = 0;
@@ -382,6 +421,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost3Y = 70 + ((ghost3GridY - 1) * 55);                    
                 }
 
+                // 糖豆人被鬼2撞到
                 if (pacmanGridX == ghost2GridX && pacmanGridY == ghost2GridY) {
                     state = "lose"; 
                     num = 0;
@@ -410,6 +450,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost3Y = 70 + ((ghost3GridY - 1) * 55);                   
                 }
 
+                // 糖豆人被鬼3撞到
                 if (pacmanGridX == ghost3GridX && pacmanGridY == ghost3GridY) {
                     state = "lose";   
                     num = 0;
@@ -438,18 +479,20 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost3Y = 70 + ((ghost3GridY - 1) * 55);                 
                 }
 
+                // 吃到椰子的逻辑：刷新新的椰子
                 if (pacmanGridX == fruitGridX && pacmanGridY == fruitGridY) {
                     spawnNewFruit();
                 }
 
+                // 每一帧糖豆人的张嘴闭嘴
                 openMouth = !openMouth;
 
-                if(num == 1) {
+                // 吃到足够的椰子就赢赢赢的逻辑
+                if(num == 2) {
                     state = "win";
                     num = 0;
 
-                    System.out.println(1000 / frameCount);
-
+                    // 分数写进leaderboard.txt
                     writeScoreToLeaderboard(1000 / frameCount);
                     
                     frameCount = 0;
@@ -477,6 +520,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost3Y = 70 + ((ghost3GridY - 1) * 55);
                 }
 
+                // 数帧数：赢了之后的分数是按跑了多少帧来算的
                 frameCount++;
 
             }
@@ -484,23 +528,25 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             try {
                 Thread.sleep(500);
 
-            } catch (Exception e) {}
+            } catch (InterruptedException e) {}
             
             // Drawing the Screen
             repaint();
         }
     }
     
+    // 听键盘
     public void keyPressed(KeyEvent e) {
     	if(state.equals("start")) {
+            // 如果在开始界面，听键盘发出了a键
     		if (e.getKeyChar() == 'a') {
     			state = "rule";
     		}
+            // 如果在开始界面，听键盘发出了b键
     		else if(e.getKeyChar() == 'b') {
     			state = "ranking";
     		}
     	} else if(state.equals("game")) {
-
             if (e.getKeyChar() == 'w') {
                 pacmanDirection = 0;
             } else if (e.getKeyChar() == 'a') {
@@ -526,18 +572,16 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 state = "start";
             }
         }
-
-    	
-
     }
+
     public void keyReleased(KeyEvent e) {}
 
     public void keyTyped(KeyEvent e) {}
 
+    // 听鼠标按键，主要是鼠标按键按到屏幕的哪里
     public void mouseClicked(MouseEvent e) {
 
         if (state.equals("start")) {
-
             
             if (340 <= e.getX() && e.getX() <= 510 &&
                 610 <= e.getY() && e.getY() <= 660) {
@@ -582,6 +626,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public void mouseExited(MouseEvent e) {}
 
     // return GridX,GridY
+    // 新的椰子的位置
     public static void spawnNewFruit() {
 
         while (true) {
@@ -600,6 +645,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     }
 
+    // 写分数到leaderboard.txt
     public static void writeScoreToLeaderboard(double score) {
 
         try {
@@ -635,6 +681,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     }
 
+    // 从leaderboard.txt里面读取5个最高分数，然后换回去一个double array
     public static double[] top5Leaderboard() {
 
         double[] topfive = new double[5];
