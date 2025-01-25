@@ -8,12 +8,8 @@ import javax.swing.*;
 
 public class App extends JPanel implements KeyListener, Runnable, MouseListener {
 
-    // start, game, rule, ranking, win, lose
     public static String state = "start";
 
-    // top left = [100, 80] [155, 80]
-    // 25 x 16
-    // distance between two squares = 55
     public static char[][] mapArray = 
         { 
             {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'}, 
@@ -42,66 +38,66 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static BufferedImage win;
     public static BufferedImage lose;
     
-    // 糖豆人的图片，屏幕上的位置，mapArray里的位置，速度，朝向，张不张嘴
     public static BufferedImage pacmanImg;
     public static BufferedImage pacmanOpenMouthImg;
     public static int pacmanX;
     public static int pacmanY;
-    public static int pacmanGridX;
-    public static int pacmanGridY;
+    public static int pacmanGridX() {
+        return (int) (((pacmanX - 80) / 55)) + 1; // round like normal
+    }
+    public static int pacmanGridY() {
+        return (int) (((pacmanY - 70) / 55)) + 1; // round like normal
+    }
     public static double pacmanVelocity;
-    // 0 = up, 1 = right, 2 = down, 3 = left
     public static int pacmanDirection;
     public static boolean openMouth;
 
-    // 鬼1的图片，屏幕上的位置，mapArray里的位置，速度，朝向
     public static BufferedImage ghost1Img;
     public static int ghost1X;
     public static int ghost1Y;
-    public static int ghost1GridX;
-    public static int ghost1GridY;
+    public static int ghost1GridX() {
+        return (int) (((ghost1X - 80) / 55)) + 1; // round like normal
+    }
+    public static int ghost1GridY() {
+        return (int) (((ghost1Y - 70) / 55)) + 1; // round like normal
+    }
     public static double ghost1Velocity;
-    // 0 = up, 1 = right, 2 = down, 3 = left
     public static int ghost1Direction;
 
-    // 鬼2的图片，屏幕上的位置，mapArray里的位置，速度，朝向
     public static BufferedImage ghost2Img;
     public static int ghost2X;
     public static int ghost2Y;
-    public static int ghost2GridX;
-    public static int ghost2GridY;
+    public static int ghost2GridX() {
+        return (int) (((ghost2X - 80) / 55)) + 1; // round like normal
+    }
+    public static int ghost2GridY() {
+        return (int) (((ghost2Y - 70) / 55)) + 1; // round like normal
+    }
     public static double ghost2Velocity;
-    // 0 = up, 1 = right, 2 = down, 3 = left
     public static int ghost2Direction;
 
-    // 鬼3的图片，屏幕上的位置，mapArray里的位置，速度，朝向
     public static BufferedImage ghost3Img;
     public static int ghost3X;
     public static int ghost3Y;
-    public static int ghost3GridX;
-    public static int ghost3GridY;
+    public static int ghost3GridX() {
+        return (int) (((ghost3X - 80) / 55)) + 1; // round like normal
+    }
+    public static int ghost3GridY() {
+        return (int) (((ghost3Y - 70) / 55)) + 1; // round like normal
+    }
     public static double ghost3Velocity;
-    // 0 = up, 1 = right, 2 = down, 3 = left
     public static int ghost3Direction;
 
-    // 椰子的图片，屏幕上的位置，mapArray里的位置
     public static BufferedImage fruitImg;
     public static int fruitX;
     public static int fruitY;
     public static int fruitGridX;
     public static int fruitGridY;
 
-    // 吃了几个椰子
     public static int num = 0;
 
-    // 时间跨度：游戏时长
     public static int frameCount = 0;
 
-    // 设置基础参数
-    // 比如键盘要不要听
-    // 鼠标要不要听
-    // 最后开始游戏
-    // this == 本体
     public App() {
         setPreferredSize(new Dimension(1400, 875));
         // KeyListener
@@ -113,15 +109,221 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         thread.start();
     }
 
-    // 画画面
-    // 根据你现在的state，去画不同的东西
-    // 比如start，就只画开始界面/背景
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         if ("start".equals(state)) {
             g.drawImage(start, 0, 0, this);
         } else if ("game".equals(state)) {
+
+            if (pacmanGridX() > ghost1GridX() && mapArray[ghost1GridY()][ghost1GridX() + 1] != 'w') {
+                ghost1Direction = 1;
+            } else if (pacmanGridX() < ghost1GridX() && mapArray[ghost1GridY()][ghost1GridX() - 1] != 'w') {
+                ghost1Direction = 3;
+            } else if (pacmanGridY() < ghost1GridY() && mapArray[ghost1GridY() - 1][ghost1GridX()] != 'w') {
+                ghost1Direction = 0;
+            } else {
+                ghost1Direction = 2;
+            }
+            
+            if (pacmanGridX() > ghost2GridX() && mapArray[ghost2GridY()][ghost2GridX() + 1] != 'w') {
+                ghost2Direction = 1;
+            } else if (pacmanGridX() < ghost2GridX() && mapArray[ghost2GridY()][ghost2GridX() - 1] != 'w') {
+                ghost2Direction = 3;
+            } else if (pacmanGridY() < ghost2GridY() && mapArray[ghost2GridY() - 1][ghost2GridX()] != 'w') {
+                ghost2Direction = 0;
+            } else {
+                ghost2Direction = 2;
+            }
+
+            if (pacmanGridX() > ghost3GridX() && mapArray[ghost3GridY()][ghost3GridX() + 1] != 'w') {
+                ghost3Direction = 1;
+            } else if (pacmanGridX() < ghost3GridX() && mapArray[ghost3GridY()][ghost3GridX() - 1] != 'w') {
+                ghost3Direction = 3;
+            } else if (pacmanGridY() < ghost3GridY() && mapArray[ghost3GridY() - 1][ghost3GridX()] != 'w') {
+                ghost3Direction = 0;
+            } else {
+                ghost3Direction = 2;
+            }
+
+            if (pacmanDirection == 0) {
+                pacmanY -= pacmanVelocity;
+                if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
+                    pacmanY += pacmanVelocity;
+                }
+            } else if (pacmanDirection == 1) {
+                pacmanX += pacmanVelocity;
+
+                if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
+                    pacmanX -= pacmanVelocity;
+                }
+            } else if (pacmanDirection == 2) {
+                pacmanY += pacmanVelocity;
+                if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
+                    pacmanY -= pacmanVelocity;
+                }
+            } else if (pacmanDirection == 3) {
+                pacmanX -= pacmanVelocity;
+                if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
+                    pacmanX += pacmanVelocity;
+                }
+            }
+
+            if (ghost1Direction == 0) {
+                ghost1Y -= ghost1Velocity;
+                if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
+                    ghost1Y += ghost1Velocity;
+                }
+            } else if (ghost1Direction == 1) {
+                ghost1X += ghost1Velocity;
+                if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
+                    ghost1X -= ghost1Velocity;
+                }
+            } else if (ghost1Direction == 2) {
+                ghost1Y += ghost1Velocity;
+                if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
+                    ghost1Y -= ghost1Velocity;
+                }
+            } else if (ghost1Direction == 3) {
+                ghost1X -= ghost1Velocity;
+                if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
+                    ghost1X += ghost1Velocity;
+                }
+            }
+
+            
+            if (ghost2Direction == 0) {
+                if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
+                    ghost2Y += ghost2Velocity;
+                }
+            } else if (ghost2Direction == 1) {
+                ghost2X += ghost2Velocity;
+                if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
+                    ghost2X -= ghost2Velocity;
+                }
+            } else if (ghost2Direction == 2) {
+                ghost2Y += ghost2Velocity;
+                if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
+                    ghost2Y -= ghost2Velocity;
+                }
+            } else if (ghost2Direction == 3) {
+                ghost2X -= ghost2Velocity;
+                if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
+                    ghost2X += ghost2Velocity;
+                }
+            }
+
+
+            // 鬼3的移动逻辑
+            // 利用面朝来决定下一帧的位置
+            // 包括撞墙就不动
+            if (ghost3Direction == 0) {
+                ghost3Y -= ghost3Velocity;
+                if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
+                    ghost3Y += ghost3Velocity;
+                }
+            } else if (ghost3Direction == 1) {
+                ghost3X += ghost3Velocity;
+                if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
+                    ghost3X -= ghost3Velocity;
+                }
+            } else if (ghost3Direction == 2) {
+                ghost3Y += ghost3Velocity;
+                if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
+                    ghost3Y -= ghost3Velocity;
+                }
+            } else if (ghost3Direction == 3) {
+                ghost3X -= ghost3Velocity;
+                if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
+                    ghost3X += ghost3Velocity;
+                }
+            }
+
+            if (pacmanGridX() == ghost1GridX() && pacmanGridY() == ghost1GridY()) {
+                state = "lose";
+                num = 0;
+                frameCount = 0;
+                pacmanX = 80;
+                pacmanY = 70;
+
+                ghost1X = 1290;
+                ghost1Y = 70;
+
+                ghost2X = 1290;
+                ghost2Y = 785;
+
+                ghost3X = 80;
+                ghost3Y = 785;                         
+            }
+
+            if (pacmanGridX() == ghost2GridX() && pacmanGridY() == ghost2GridY()) {
+                state = "lose"; 
+                num = 0;
+                frameCount = 0;
+
+                pacmanX = 80;
+                pacmanY = 70;
+
+                ghost1X = 1290;
+                ghost1Y = 70;
+
+                ghost2X = 1290;
+                ghost2Y = 785;
+
+                ghost3X = 80;
+                ghost3Y = 785;                        
+            }
+
+            if (pacmanGridX() == ghost2GridX() && pacmanGridY() == ghost2GridY()) {
+                state = "lose"; 
+                num = 0;
+                frameCount = 0;
+
+                pacmanX = 80;
+                pacmanY = 70;
+
+                ghost1X = 1290;
+                ghost1Y = 70;
+
+                ghost2X = 1290;
+                ghost2Y = 785;
+
+                ghost3X = 80;
+                ghost3Y = 785;                        
+            }
+
+                ghost3Y = 785;
+                ghost3Y = 785;
+            if (pacmanGridX() == fruitGridX && pacmanGridY() == fruitGridY) {
+                spawnNewFruit();
+            }
+
+            openMouth = !openMouth;
+
+            if(num == 2) {
+                state = "win";
+                num = 0;
+
+                writeScoreToLeaderboard(frameCount);
+                pacmanX = 80;
+                pacmanY = 70;
+
+                ghost1X = 1290;
+                ghost1Y = 70;
+
+                ghost2X = 1290;
+                ghost2Y = 785;
+
+                ghost3X = 80;
+                ghost3Y = 785;       
+                ghost3X = 80;
+                ghost3Y = 785;       
+                ghost3X = 80;
+                ghost3Y = 785; 
+            }      
+            // 数帧数：赢了之后的分数是按跑了多少帧来算的
+            frameCount++;
+
             g.drawImage(game, 0, 0, this);
             g.drawImage(fruitImg, fruitX, fruitY, this);
 
@@ -153,13 +355,11 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             g.setColor(new Color(0, 0, 0));
         } else if ("win".equals(state)) {
         	 g.drawImage(win,0,0, this);
-        } else if ("lose".equals(state)) {
-        	 g.drawImage(lose,0,0, this);
+        } else {
+            g.drawImage(lose,0,0, this);
         }
-        
     }
 
-    // 游戏的进入点：这里设置所有资源，例如图片和起始位置
     public static void main(String[] args) throws IOException {
         game = ImageIO.read(new File("resources/background.png"));
         start = ImageIO.read(new File("resources/start.png"));
@@ -172,33 +372,25 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         pacmanImg = ImageIO.read(new File("resources/pacman.png"));
         pacmanX = 80;
         pacmanY = 70;
-        pacmanGridX = 1;
-        pacmanGridY = 1;
-        pacmanVelocity = 55;
+        pacmanVelocity = 1;
         pacmanDirection = 1;
 
         ghost1Img = ImageIO.read(new File("resources/ghost1.png"));
-        ghost1GridX = 23;
-        ghost1GridY = 1;
-        ghost1X = 80 + ((ghost1GridX - 1) * 55);
-        ghost1Y = 70 + ((ghost1GridY - 1) * 55);
-        ghost1Velocity = 55;
+        ghost1X = 1290;
+        ghost1Y = 70;
+        ghost1Velocity = 1;
         ghost1Direction = 1;
 
         ghost2Img = ImageIO.read(new File("resources/ghost2.png"));
-        ghost2GridX = 23;
-        ghost2GridY = 14;
-        ghost2X = 80 + ((ghost2GridX - 1) * 55);
-        ghost2Y = 70 + ((ghost2GridY - 1) * 55);
-        ghost2Velocity = 55;
+        ghost2X = 1290;
+        ghost2Y = 785;
+        ghost2Velocity = 1;
         ghost2Direction = 1;
 
         ghost3Img = ImageIO.read(new File("resources/ghost3.png"));
-        ghost3GridX = 1;
-        ghost3GridY = 14;
-        ghost3X = 80 + ((ghost3GridX - 1) * 55);
-        ghost3Y = 70 + ((ghost3GridY - 1) * 55);
-        ghost3Velocity = 55;
+        ghost3X = 80;
+        ghost3Y = 785;
+        ghost3Velocity = 1;
         ghost3Direction = 1;
 
         fruitImg = ImageIO.read(new File("resources/coconut.png"));
@@ -207,7 +399,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         fruitX = 80 + ((fruitGridX - 1) * 55);
         fruitY = 70 + ((fruitGridY - 1) * 55);
 
-        // 设置完资源之后，开始跑游戏
         JFrame frame = new JFrame("Pacman");
         JPanel panel = new App();
         frame.add(panel);
@@ -216,317 +407,11 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     }
 
-    // 每一帧都会跑一次的核心逻辑
     public void run() {
         while(true){                
-            if (state == "game") {
-
-                // 鬼1的朝向逻辑
-                // 始终往糖豆人的方向移动
-                if (pacmanGridX > ghost1GridX && mapArray[ghost1GridY][ghost1GridX + 1] != 'w') {
-                    ghost1Direction = 1;
-                } else if (pacmanGridX < ghost1GridX && mapArray[ghost1GridY][ghost1GridX - 1] != 'w') {
-                    ghost1Direction = 3;
-                } else if (pacmanGridY < ghost1GridY && mapArray[ghost1GridY - 1][ghost1GridX] != 'w') {
-                    ghost1Direction = 0;
-                } else {
-                    ghost1Direction = 2;
-                }
-                
-                // 鬼2的朝向逻辑
-                // 始终往糖豆人的方向移动
-                if (pacmanGridX > ghost2GridX && mapArray[ghost2GridY][ghost2GridX + 1] != 'w') {
-                    ghost2Direction = 1;
-                } else if (pacmanGridX < ghost2GridX && mapArray[ghost2GridY][ghost2GridX - 1] != 'w') {
-                    ghost2Direction = 3;
-                } else if (pacmanGridY < ghost2GridY && mapArray[ghost2GridY - 1][ghost2GridX] != 'w') {
-                    ghost2Direction = 0;
-                } else {
-                    ghost2Direction = 2;
-                }
-
-                // 鬼3的朝向逻辑
-                // 始终往糖豆人的方向移动
-                if (pacmanGridX > ghost3GridX && mapArray[ghost3GridY][ghost3GridX + 1] != 'w') {
-                    ghost3Direction = 1;
-                } else if (pacmanGridX < ghost3GridX && mapArray[ghost3GridY][ghost3GridX - 1] != 'w') {
-                    ghost3Direction = 3;
-                } else if (pacmanGridY < ghost3GridY && mapArray[ghost3GridY - 1][ghost3GridX] != 'w') {
-                    ghost3Direction = 0;
-                } else {
-                    ghost3Direction = 2;
-                }
-
-                // 糖豆人的移动逻辑
-                // 利用面朝来决定下一帧的位置
-                // 包括撞墙就不动
-                if (pacmanDirection == 0) {
-                    pacmanY -= pacmanVelocity;
-                    pacmanGridY -= 1;
-                    if (mapArray[pacmanGridY][pacmanGridX] == 'w') {
-                        pacmanY += pacmanVelocity;
-                        pacmanGridY += 1;
-                    }
-                } else if (pacmanDirection == 1) {
-                    pacmanGridX += 1;
-                    pacmanX += pacmanVelocity;
-
-                    if (mapArray[pacmanGridY][pacmanGridX] == 'w') {
-                        pacmanGridX -= 1;
-                        pacmanX -= pacmanVelocity;
-                    }
-                } else if (pacmanDirection == 2) {
-                    pacmanGridY += 1;
-                    pacmanY += pacmanVelocity;
-                    if (mapArray[pacmanGridY][pacmanGridX] == 'w') {
-                        pacmanY -= pacmanVelocity;
-                        pacmanGridY -= 1;
-                    }
-                } else if (pacmanDirection == 3) {
-                    pacmanGridX -= 1;
-                    pacmanX -= pacmanVelocity;
-                    if (mapArray[pacmanGridY][pacmanGridX] == 'w') {
-                        pacmanX += pacmanVelocity;
-                        pacmanGridX += 1;
-                    }
-                }
-
-                // 鬼1的移动逻辑
-                // 利用面朝来决定下一帧的位置
-                // 包括撞墙就不动
-                if (ghost1Direction == 0) {
-                    ghost1GridY -= 1;
-                    ghost1Y -= ghost1Velocity;
-                    if (mapArray[ghost1GridY][ghost1GridX] == 'w') {
-                        ghost1Y += ghost1Velocity;
-                        ghost1GridY += 1;
-                    }
-                } else if (ghost1Direction == 1) {
-                    ghost1GridX += 1;
-                    ghost1X += ghost1Velocity;
-                    if (mapArray[ghost1GridY][ghost1GridX] == 'w') {
-                        ghost1X -= ghost1Velocity;
-                        ghost1GridX -= 1;
-                    }
-                } else if (ghost1Direction == 2) {
-                    ghost1GridY += 1;
-                    ghost1Y += ghost1Velocity;
-                    if (mapArray[ghost1GridY][ghost1GridX] == 'w') {
-                        ghost1Y -= ghost1Velocity;
-                        ghost1GridY -= 1;
-                    }
-                } else if (ghost1Direction == 3) {
-                    ghost1GridX -= 1;
-                    ghost1X -= ghost1Velocity;
-                    if (mapArray[ghost1GridY][ghost1GridX] == 'w') {
-                        ghost1X += ghost1Velocity;
-                        ghost1GridX += 1;
-                    }
-                }
-
-                
-                // 鬼2的移动逻辑
-                // 利用面朝来决定下一帧的位置
-                // 包括撞墙就不动
-                if (ghost2Direction == 0) {
-                    ghost2GridY -= 1;
-                    ghost2Y -= ghost2Velocity;
-                    if (mapArray[ghost2GridY][ghost2GridX] == 'w') {
-                        ghost2Y += ghost2Velocity;
-                        ghost2GridY += 1;
-                    }
-                } else if (ghost2Direction == 1) {
-                    ghost2GridX += 1;
-                    ghost2X += ghost2Velocity;
-                    if (mapArray[ghost2GridY][ghost2GridX] == 'w') {
-                        ghost2X -= ghost2Velocity;
-                        ghost2GridX -= 1;
-                    }
-                } else if (ghost2Direction == 2) {
-                    ghost2GridY += 1;
-                    ghost2Y += ghost2Velocity;
-                    if (mapArray[ghost2GridY][ghost2GridX] == 'w') {
-                        ghost2Y -= ghost2Velocity;
-                        ghost2GridY -= 1;
-                    }
-                } else if (ghost2Direction == 3) {
-                    ghost2GridX -= 1;
-                    ghost2X -= ghost2Velocity;
-                    if (mapArray[ghost2GridY][ghost2GridX] == 'w') {
-                        ghost2X += ghost2Velocity;
-                        ghost2GridX += 1;
-                    }
-                }
-
-
-                // 鬼3的移动逻辑
-                // 利用面朝来决定下一帧的位置
-                // 包括撞墙就不动
-                if (ghost3Direction == 0) {
-                    ghost3GridY -= 1;
-                    ghost3Y -= ghost3Velocity;
-                    if (mapArray[ghost3GridY][ghost3GridX] == 'w') {
-                        ghost3Y += ghost3Velocity;
-                        ghost3GridY += 1;
-                    }
-                } else if (ghost3Direction == 1) {
-                    ghost3GridX += 1;
-                    ghost3X += ghost3Velocity;
-                    if (mapArray[ghost3GridY][ghost3GridX] == 'w') {
-                        ghost3X -= ghost3Velocity;
-                        ghost3GridX -= 1;
-                    }
-                } else if (ghost3Direction == 2) {
-                    ghost3GridY += 1;
-                    ghost3Y += ghost3Velocity;
-                    if (mapArray[ghost3GridY][ghost3GridX] == 'w') {
-                        ghost3Y -= ghost3Velocity;
-                        ghost3GridY -= 1;
-                    }
-                } else if (ghost3Direction == 3) {
-                    ghost3GridX -= 1;
-                    ghost3X -= ghost3Velocity;
-                    if (mapArray[ghost3GridY][ghost3GridX] == 'w') {
-                        ghost3X += ghost3Velocity;
-                        ghost3GridX += 1;
-                    }
-                }
-
-                // 糖豆人被鬼1撞到
-                if (pacmanGridX == ghost1GridX && pacmanGridY == ghost1GridY) {
-                    state = "lose";
-                    num = 0;
-                    frameCount = 0;
-                    pacmanGridX = 1;
-                    pacmanGridY = 1;
-                    pacmanX = 80;
-                    pacmanY = 70;
-
-
-                    ghost1GridX = 23;
-                    ghost1GridY = 1;
-                    ghost1X = 80 + ((ghost1GridX - 1) * 55);
-                    ghost1Y = 70 + ((ghost1GridY - 1) * 55);
-
-
-                    ghost2GridX = 23;
-                    ghost2GridY = 14;
-                    ghost2X = 80 + ((ghost2GridX - 1) * 55);
-                    ghost2Y = 70 + ((ghost2GridY - 1) * 55);
-
-
-                    ghost3GridX = 1;
-                    ghost3GridY = 14;
-                    ghost3X = 80 + ((ghost3GridX - 1) * 55);
-                    ghost3Y = 70 + ((ghost3GridY - 1) * 55);                    
-                }
-
-                // 糖豆人被鬼2撞到
-                if (pacmanGridX == ghost2GridX && pacmanGridY == ghost2GridY) {
-                    state = "lose"; 
-                    num = 0;
-                    frameCount = 0;
-                    pacmanGridX = 1;
-                    pacmanGridY = 1;
-                    pacmanX = 80;
-                    pacmanY = 70;
-
-
-                    ghost1GridX = 23;
-                    ghost1GridY = 1;
-                    ghost1X = 80 + ((ghost1GridX - 1) * 55);
-                    ghost1Y = 70 + ((ghost1GridY - 1) * 55);
-
-
-                    ghost2GridX = 23;
-                    ghost2GridY = 14;
-                    ghost2X = 80 + ((ghost2GridX - 1) * 55);
-                    ghost2Y = 70 + ((ghost2GridY - 1) * 55);
-
-
-                    ghost3GridX = 1;
-                    ghost3GridY = 14;
-                    ghost3X = 80 + ((ghost3GridX - 1) * 55);
-                    ghost3Y = 70 + ((ghost3GridY - 1) * 55);                   
-                }
-
-                // 糖豆人被鬼3撞到
-                if (pacmanGridX == ghost3GridX && pacmanGridY == ghost3GridY) {
-                    state = "lose";   
-                    num = 0;
-                    frameCount = 0;
-                    pacmanGridX = 1;
-                    pacmanGridY = 1;
-                    pacmanX = 80;
-                    pacmanY = 70;
-
-
-                    ghost1GridX = 23;
-                    ghost1GridY = 1;
-                    ghost1X = 80 + ((ghost1GridX - 1) * 55);
-                    ghost1Y = 70 + ((ghost1GridY - 1) * 55);
-
-
-                    ghost2GridX = 23;
-                    ghost2GridY = 14;
-                    ghost2X = 80 + ((ghost2GridX - 1) * 55);
-                    ghost2Y = 70 + ((ghost2GridY - 1) * 55);
-
-
-                    ghost3GridX = 1;
-                    ghost3GridY = 14;
-                    ghost3X = 80 + ((ghost3GridX - 1) * 55);
-                    ghost3Y = 70 + ((ghost3GridY - 1) * 55);                 
-                }
-
-                // 吃到椰子的逻辑：刷新新的椰子
-                if (pacmanGridX == fruitGridX && pacmanGridY == fruitGridY) {
-                    spawnNewFruit();
-                }
-
-                // 每一帧糖豆人的张嘴闭嘴
-                openMouth = !openMouth;
-
-                // 吃到足够的椰子就赢赢赢的逻辑
-                if(num == 2) {
-                    state = "win";
-                    num = 0;
-
-                    // 分数写进leaderboard.txt
-                    writeScoreToLeaderboard(1000 / frameCount);
-                    
-                    frameCount = 0;
-                    pacmanGridX = 1;
-                    pacmanGridY = 1;
-                    pacmanX = 80;
-                    pacmanY = 70;
-
-
-                    ghost1GridX = 23;
-                    ghost1GridY = 1;
-                    ghost1X = 80 + ((ghost1GridX - 1) * 55);
-                    ghost1Y = 70 + ((ghost1GridY - 1) * 55);
-
-
-                    ghost2GridX = 23;
-                    ghost2GridY = 14;
-                    ghost2X = 80 + ((ghost2GridX - 1) * 55);
-                    ghost2Y = 70 + ((ghost2GridY - 1) * 55);
-
-
-                    ghost3GridX = 1;
-                    ghost3GridY = 14;
-                    ghost3X = 80 + ((ghost3GridX - 1) * 55);
-                    ghost3Y = 70 + ((ghost3GridY - 1) * 55);
-                }
-
-                // 数帧数：赢了之后的分数是按跑了多少帧来算的
-                frameCount++;
-
-            }
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(20);   // 50 frames per second
 
             } catch (InterruptedException e) {}
             
@@ -578,7 +463,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     public void keyTyped(KeyEvent e) {}
 
-    // 听鼠标按键，主要是鼠标按键按到屏幕的哪里
     public void mouseClicked(MouseEvent e) {
 
         if (state.equals("start")) {
@@ -625,8 +509,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     public void mouseExited(MouseEvent e) {}
 
-    // return GridX,GridY
-    // 新的椰子的位置
     public static void spawnNewFruit() {
 
         while (true) {
@@ -644,8 +526,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         }
 
     }
-
-    // 写分数到leaderboard.txt
     public static void writeScoreToLeaderboard(double score) {
 
         try {
@@ -681,7 +561,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
     }
 
-    // 从leaderboard.txt里面读取5个最高分数，然后换回去一个double array
+
     public static double[] top5Leaderboard() {
 
         double[] topfive = new double[5];
