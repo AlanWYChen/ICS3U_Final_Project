@@ -43,10 +43,10 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static int pacmanX;
     public static int pacmanY;
     public static int pacmanGridX() {
-        return (int) (((pacmanX - 80) / 55)) + 1; // round like normal
+        return ((int) ((((double) pacmanX - 80) / 55) + 0.5)) + 1;
     }
     public static int pacmanGridY() {
-        return (int) (((pacmanY - 70) / 55)) + 1; // round like normal
+        return ((int) ((((double) pacmanY - 70) / 55) + 0.5)) + 1;
     }
     public static double pacmanVelocity;
     public static int pacmanDirection;
@@ -116,6 +116,9 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             g.drawImage(start, 0, 0, this);
         } else if ("game".equals(state)) {
 
+            System.out.printf("(%d, %d)%n", pacmanX, pacmanY);
+            System.out.printf("(%d, %d)%n", pacmanGridX(), pacmanGridY());
+
             if (pacmanGridX() > ghost1GridX() && mapArray[ghost1GridY()][ghost1GridX() + 1] != 'w') {
                 ghost1Direction = 1;
             } else if (pacmanGridX() < ghost1GridX() && mapArray[ghost1GridY()][ghost1GridX() - 1] != 'w') {
@@ -148,22 +151,41 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
             if (pacmanDirection == 0) {
                 pacmanY -= pacmanVelocity;
+
+                if ((pacmanX - 80) % 55 != 0) {
+                    pacmanX = (pacmanGridX() - 1) * 55 + 80;
+                }
+
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
                     pacmanY += pacmanVelocity;
                 }
             } else if (pacmanDirection == 1) {
                 pacmanX += pacmanVelocity;
 
+                if ((pacmanY - 70) % 55 != 0) {
+                    pacmanY = (pacmanGridY() - 1) * 55 + 70;
+                }
+
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
                     pacmanX -= pacmanVelocity;
                 }
             } else if (pacmanDirection == 2) {
                 pacmanY += pacmanVelocity;
+
+                if ((pacmanX - 80) % 55 != 0) {
+                    pacmanX = (pacmanGridX() - 1) * 55 + 80;
+                }
+
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
                     pacmanY -= pacmanVelocity;
                 }
             } else if (pacmanDirection == 3) {
                 pacmanX -= pacmanVelocity;
+
+                if ((pacmanY - 70) % 55 != 0) {
+                    pacmanY = (pacmanGridY() - 1) * 55 + 80;
+                }
+
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
                     pacmanX += pacmanVelocity;
                 }
