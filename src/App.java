@@ -265,6 +265,9 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             }
 
             if (ghost1Direction == 0) {
+
+                ghost1Y -= ghost1Velocity;
+
                 if ((ghost1X - 80) % 56 != 0) {
                     ghost1X = (ghost1GridX() - 1) * 56 + 80;
                 }
@@ -273,6 +276,9 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost1Y += 25;
                 }
             } else if (ghost1Direction == 1) {
+
+                ghost1X += ghost1Velocity;
+
                 if ((ghost1Y - 70) % 54 != 0) {
                     ghost1Y = (ghost1GridY() - 1) * 54 + 70;
                 }
@@ -291,6 +297,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost1Y -= 25;
                 }
             } else if (ghost1Direction == 3) {
+                ghost1X -= ghost1Velocity;
+
                 if ((ghost1Y - 70) % 54 != 0) {
                     ghost1Y = (ghost1GridY() - 1) * 54 + 70;
                 }
