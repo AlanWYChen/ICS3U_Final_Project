@@ -73,10 +73,24 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static int ghost1X;
     public static int ghost1Y;
     public static int ghost1GridX() {
-        return (int) (((ghost1X - 80) / 55)) + 1; // round like normal
+        if (ghost1X < 70) {
+            return 0;
+        } else if (ghost1X > 1300) {
+            return 24;
+        }
+        return ((int) ((((double) ghost1X - 80) / 56) + 0.5)) + 1;
+         // round like normal
     }
     public static int ghost1GridY() {
-        return (int) (((ghost1Y - 70) / 55)) + 1; // round like normal
+        if (ghost1Y < 60) {
+            return 0;
+        } else if (ghost1Y > 795) {
+            return 15;
+        }
+
+        return ((int) ((((double) ghost1Y - 70) / 54) + 0.5)) + 1;
+        
+        // round like normal
     }
     public static double ghost1Velocity;
     public static int ghost1Direction;
@@ -85,10 +99,25 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static int ghost2X;
     public static int ghost2Y;
     public static int ghost2GridX() {
-        return (int) (((ghost2X - 80) / 55)) + 1; // round like normal
+        if (ghost2X < 70) {
+            return 0;
+        } else if (ghost2X > 1300) {
+            return 24;
+        }
+        return ((int) ((((double) ghost2X - 80) / 56) + 0.5)) + 1;
+        
+        // round like normal
     }
     public static int ghost2GridY() {
-        return (int) (((ghost2Y - 70) / 55)) + 1; // round like normal
+        if (ghost2Y < 60) {
+            return 0;
+        } else if (ghost2Y > 795) {
+            return 15;
+        }
+
+        return ((int) ((((double) ghost2Y - 70) / 54) + 0.5)) + 1;
+        
+        // round like normal
     }
     public static double ghost2Velocity;
     public static int ghost2Direction;
@@ -97,10 +126,25 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static int ghost3X;
     public static int ghost3Y;
     public static int ghost3GridX() {
-        return (int) (((ghost3X - 80) / 55)) + 1; // round like normal
+        if (ghost3X < 70) {
+            return 0;
+        } else if (ghost3X > 1300) {
+            return 24;
+        }
+        return ((int) ((((double) ghost3X - 80) / 56) + 0.5)) + 1;
+        
+        // round like normal
     }
     public static int ghost3GridY() {
-        return (int) (((ghost3Y - 70) / 55)) + 1; // round like normal
+        if (ghost3Y < 60) {
+            return 0;
+        } else if (ghost3Y > 795) {
+            return 15;
+        }
+
+        return ((int) ((((double) ghost3Y - 70) / 54) + 0.5)) + 1;
+        
+        // round like normal
     }
     public static double ghost3Velocity;
     public static int ghost3Direction;
@@ -221,46 +265,75 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             }
 
             if (ghost1Direction == 0) {
-                ghost1Y -= ghost1Velocity;
+                if ((ghost1X - 80) % 56 != 0) {
+                    ghost1X = (ghost1GridX() - 1) * 56 + 80;
+                }
+
                 if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
-                    ghost1Y += ghost1Velocity;
+                    ghost1Y += 25;
                 }
             } else if (ghost1Direction == 1) {
-                ghost1X += ghost1Velocity;
+                if ((ghost1Y - 70) % 54 != 0) {
+                    ghost1Y = (ghost1GridY() - 1) * 54 + 70;
+                }
+
                 if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
-                    ghost1X -= ghost1Velocity;
+                    ghost1X -= 25;
                 }
             } else if (ghost1Direction == 2) {
                 ghost1Y += ghost1Velocity;
+
+                if ((ghost1X - 80) % 56 != 0) {
+                    ghost1X = (ghost1GridX() - 1) * 56 + 80;
+                }
+
                 if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
-                    ghost1Y -= ghost1Velocity;
+                    ghost1Y -= 25;
                 }
             } else if (ghost1Direction == 3) {
-                ghost1X -= ghost1Velocity;
+                if ((ghost1Y - 70) % 54 != 0) {
+                    ghost1Y = (ghost1GridY() - 1) * 54 + 70;
+                }
+
                 if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
-                    ghost1X += ghost1Velocity;
+                    ghost1X += 25;
                 }
             }
 
             
             if (ghost2Direction == 0) {
+                if ((ghost2X - 80) % 56 != 0) {
+                    ghost2X = (ghost2GridX() - 1) * 56 + 80;
+                }
+
                 if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
-                    ghost2Y += ghost2Velocity;
+                    ghost2Y += 25;
                 }
             } else if (ghost2Direction == 1) {
-                ghost2X += ghost2Velocity;
+                if ((ghost2Y - 70) % 54 != 0) {
+                    ghost2Y = (ghost2GridY() - 1) * 54 + 70;
+                }
+
                 if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
-                    ghost2X -= ghost2Velocity;
+                    ghost2X -= 25;
                 }
             } else if (ghost2Direction == 2) {
                 ghost2Y += ghost2Velocity;
+
+                if ((ghost2X - 80) % 56 != 0) {
+                    ghost2X = (ghost2GridX() - 1) * 56 + 80;
+                }
+
                 if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
-                    ghost2Y -= ghost2Velocity;
+                    ghost2Y -= 25;
                 }
             } else if (ghost2Direction == 3) {
-                ghost2X -= ghost2Velocity;
+                if ((ghost2Y - 70) % 54 != 0) {
+                    ghost2Y = (ghost2GridY() - 1) * 54 + 70;
+                }
+
                 if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
-                    ghost2X += ghost2Velocity;
+                    ghost2X += 25;
                 }
             }
 
@@ -269,24 +342,38 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             // 利用面朝来决定下一帧的位置
             // 包括撞墙就不动
             if (ghost3Direction == 0) {
-                ghost3Y -= ghost3Velocity;
+                if ((ghost3X - 80) % 56 != 0) {
+                    ghost3X = (ghost3GridX() - 1) * 56 + 80;
+                }
+
                 if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
-                    ghost3Y += ghost3Velocity;
+                    ghost3Y += 25;
                 }
             } else if (ghost3Direction == 1) {
-                ghost3X += ghost3Velocity;
+                if ((ghost3Y - 70) % 54 != 0) {
+                    ghost3Y = (ghost3GridY() - 1) * 54 + 70;
+                }
+
                 if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
-                    ghost3X -= ghost3Velocity;
+                    ghost3X -= 25;
                 }
             } else if (ghost3Direction == 2) {
                 ghost3Y += ghost3Velocity;
+
+                if ((ghost3X - 80) % 56 != 0) {
+                    ghost3X = (ghost3GridX() - 1) * 56 + 80;
+                }
+
                 if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
-                    ghost3Y -= ghost3Velocity;
+                    ghost3Y -= 25;
                 }
             } else if (ghost3Direction == 3) {
-                ghost3X -= ghost3Velocity;
+                if ((ghost3Y - 70) % 54 != 0) {
+                    ghost3Y = (ghost3GridY() - 1) * 54 + 70;
+                }
+
                 if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
-                    ghost3X += ghost3Velocity;
+                    ghost3X += 25;
                 }
             }
 
