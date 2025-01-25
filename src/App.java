@@ -310,6 +310,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
             
             if (ghost2Direction == 0) {
+                ghost2Y -= ghost2Velocity;
                 if ((ghost2X - 80) % 56 != 0) {
                     ghost2X = (ghost2GridX() - 1) * 56 + 80;
                 }
@@ -318,6 +319,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost2Y += 25;
                 }
             } else if (ghost2Direction == 1) {
+                ghost2X += ghost2Velocity;
                 if ((ghost2Y - 70) % 54 != 0) {
                     ghost2Y = (ghost2GridY() - 1) * 54 + 70;
                 }
@@ -336,6 +338,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost2Y -= 25;
                 }
             } else if (ghost2Direction == 3) {
+                ghost2X -= ghost2Velocity;
                 if ((ghost2Y - 70) % 54 != 0) {
                     ghost2Y = (ghost2GridY() - 1) * 54 + 70;
                 }
@@ -350,6 +353,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             // 利用面朝来决定下一帧的位置
             // 包括撞墙就不动
             if (ghost3Direction == 0) {
+                ghost3Y -= ghost3Velocity;
                 if ((ghost3X - 80) % 56 != 0) {
                     ghost3X = (ghost3GridX() - 1) * 56 + 80;
                 }
@@ -358,6 +362,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost3Y += 25;
                 }
             } else if (ghost3Direction == 1) {
+                ghost3X += ghost3Velocity;
                 if ((ghost3Y - 70) % 54 != 0) {
                     ghost3Y = (ghost3GridY() - 1) * 54 + 70;
                 }
@@ -376,6 +381,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                     ghost3Y -= 25;
                 }
             } else if (ghost3Direction == 3) {
+                ghost3X -= ghost3Velocity;
                 if ((ghost3Y - 70) % 54 != 0) {
                     ghost3Y = (ghost3GridY() - 1) * 54 + 70;
                 }
