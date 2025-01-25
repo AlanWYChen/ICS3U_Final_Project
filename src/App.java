@@ -43,10 +43,27 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static int pacmanX;
     public static int pacmanY;
     public static int pacmanGridX() {
-        return ((int) ((((double) pacmanX - 80) / 55) + 0.5)) + 1;
+
+        // <**
+        if (pacmanX < 70) {
+            return 0;
+        } else if (pacmanX > 1300) {
+            return 24;
+        }
+        return ((int) ((((double) pacmanX - 80) / 56) + 0.5)) + 1;
+        // **>
     }
     public static int pacmanGridY() {
-        return ((int) ((((double) pacmanY - 70) / 55) + 0.5)) + 1;
+
+        // <**
+        if (pacmanY < 60) {
+            return 0;
+        } else if (pacmanY > 795) {
+            return 15;
+        }
+
+        return ((int) ((((double) pacmanY - 70) / 54) + 0.5)) + 1;
+        // **>
     }
     public static double pacmanVelocity;
     public static int pacmanDirection;
@@ -152,43 +169,55 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             if (pacmanDirection == 0) {
                 pacmanY -= pacmanVelocity;
 
-                if ((pacmanX - 80) % 55 != 0) {
-                    pacmanX = (pacmanGridX() - 1) * 55 + 80;
+                // <**
+                if ((pacmanX - 80) % 56 != 0) {
+                    pacmanX = (pacmanGridX() - 1) * 56 + 80;
                 }
 
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
-                    pacmanY += pacmanVelocity;
+                    pacmanY += 25;
                 }
+                // **>
+
             } else if (pacmanDirection == 1) {
                 pacmanX += pacmanVelocity;
 
-                if ((pacmanY - 70) % 55 != 0) {
-                    pacmanY = (pacmanGridY() - 1) * 55 + 70;
+                // <**
+                if ((pacmanY - 70) % 54 != 0) {
+                    pacmanY = (pacmanGridY() - 1) * 54 + 70;
                 }
 
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
-                    pacmanX -= pacmanVelocity;
+                    pacmanX -= 25;
                 }
+                // **>
+
             } else if (pacmanDirection == 2) {
                 pacmanY += pacmanVelocity;
 
-                if ((pacmanX - 80) % 55 != 0) {
-                    pacmanX = (pacmanGridX() - 1) * 55 + 80;
+                // <** 
+                if ((pacmanX - 80) % 56 != 0) {
+                    pacmanX = (pacmanGridX() - 1) * 56 + 80;
                 }
 
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
-                    pacmanY -= pacmanVelocity;
+                    pacmanY -= 25;
                 }
+                // **>
+
             } else if (pacmanDirection == 3) {
                 pacmanX -= pacmanVelocity;
 
-                if ((pacmanY - 70) % 55 != 0) {
-                    pacmanY = (pacmanGridY() - 1) * 55 + 80;
+                // <**
+                if ((pacmanY - 70) % 54 != 0) {
+                    pacmanY = (pacmanGridY() - 1) * 54 + 70;
                 }
 
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
-                    pacmanX += pacmanVelocity;
+                    pacmanX += 25;
                 }
+                // **>
+
             }
 
             if (ghost1Direction == 0) {
