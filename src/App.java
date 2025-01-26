@@ -38,8 +38,14 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
     public static BufferedImage win;
     public static BufferedImage lose;
     
-    public static BufferedImage pacmanImg;
-    public static BufferedImage pacmanOpenMouthImg;
+    public static BufferedImage pacmanUpImg;
+    public static BufferedImage pacmanDownImg;
+    public static BufferedImage pacmanLeftImg;
+    public static BufferedImage pacmanRightImg;
+    public static BufferedImage pacmanOpenMouthUpImg;
+    public static BufferedImage pacmanOpenMouthDownImg;
+    public static BufferedImage pacmanOpenMouthLeftImg;
+    public static BufferedImage pacmanOpenMouthRightImg;
     public static int pacmanX;
     public static int pacmanY;
     public static int pacmanGridX() {
@@ -62,7 +68,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             return 15;
         }
 
-        return ((int) ((((double) pacmanY - 70) / 54) + 0.5)) + 1;
+        return ((int) ((((double) pacmanY - 70) / 55) + 0.5)) + 1;
         // **>
     }
     public static double pacmanVelocity;
@@ -88,7 +94,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             return 15;
         }
 
-        return ((int) ((((double) ghost1Y - 70) / 54) + 0.5)) + 1;
+        return ((int) ((((double) ghost1Y - 70) / 55) + 0.5)) + 1;
         
         // round like normal
     }
@@ -115,7 +121,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             return 15;
         }
 
-        return ((int) ((((double) ghost2Y - 70) / 54) + 0.5)) + 1;
+        return ((int) ((((double) ghost2Y - 70) / 55) + 0.5)) + 1;
         
         // round like normal
     }
@@ -142,7 +148,7 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             return 15;
         }
 
-        return ((int) ((((double) ghost3Y - 70) / 54) + 0.5)) + 1;
+        return ((int) ((((double) ghost3Y - 70) / 55) + 0.5)) + 1;
         
         // round like normal
     }
@@ -177,8 +183,10 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             g.drawImage(start, 0, 0, this);
         } else if ("game".equals(state)) {
 
-            System.out.printf("(%d, %d)%n", pacmanX, pacmanY);
-            System.out.printf("(%d, %d)%n", pacmanGridX(), pacmanGridY());
+            System.out.printf("(%d, %d)%n", ghost3X, ghost3Y);
+            System.out.printf("(%d, %d)%n", ghost3GridX(), ghost3GridY());
+            System.out.println(mapArray[13][1]);
+            System.out.println(ghost3Direction);
 
             if (pacmanGridX() > ghost1GridX() && mapArray[ghost1GridY()][ghost1GridX() + 1] != 'w') {
                 ghost1Direction = 1;
@@ -227,8 +235,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 pacmanX += pacmanVelocity;
 
                 // <**
-                if ((pacmanY - 70) % 54 != 0) {
-                    pacmanY = (pacmanGridY() - 1) * 54 + 70;
+                if ((pacmanY - 70) % 55 != 0) {
+                    pacmanY = (pacmanGridY() - 1) * 55 + 70;
                 }
 
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
@@ -253,8 +261,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 pacmanX -= pacmanVelocity;
 
                 // <**
-                if ((pacmanY - 70) % 54 != 0) {
-                    pacmanY = (pacmanGridY() - 1) * 54 + 70;
+                if ((pacmanY - 70) % 55 != 0) {
+                    pacmanY = (pacmanGridY() - 1) * 55 + 70;
                 }
 
                 if (mapArray[pacmanGridY()][pacmanGridX()] == 'w') {
@@ -279,8 +287,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
 
                 ghost1X += ghost1Velocity;
 
-                if ((ghost1Y - 70) % 54 != 0) {
-                    ghost1Y = (ghost1GridY() - 1) * 54 + 70;
+                if ((ghost1Y - 70) % 55 != 0) {
+                    ghost1Y = (ghost1GridY() - 1) * 55 + 70;
                 }
 
                 if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
@@ -299,8 +307,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             } else if (ghost1Direction == 3) {
                 ghost1X -= ghost1Velocity;
 
-                if ((ghost1Y - 70) % 54 != 0) {
-                    ghost1Y = (ghost1GridY() - 1) * 54 + 70;
+                if ((ghost1Y - 70) % 55 != 0) {
+                    ghost1Y = (ghost1GridY() - 1) * 55 + 70;
                 }
 
                 if (mapArray[ghost1GridY()][ghost1GridX()] == 'w') {
@@ -320,8 +328,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 }
             } else if (ghost2Direction == 1) {
                 ghost2X += ghost2Velocity;
-                if ((ghost2Y - 70) % 54 != 0) {
-                    ghost2Y = (ghost2GridY() - 1) * 54 + 70;
+                if ((ghost2Y - 70) % 55 != 0) {
+                    ghost2Y = (ghost2GridY() - 1) * 55 + 70;
                 }
 
                 if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
@@ -339,8 +347,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 }
             } else if (ghost2Direction == 3) {
                 ghost2X -= ghost2Velocity;
-                if ((ghost2Y - 70) % 54 != 0) {
-                    ghost2Y = (ghost2GridY() - 1) * 54 + 70;
+                if ((ghost2Y - 70) % 55 != 0) {
+                    ghost2Y = (ghost2GridY() - 1) * 55 + 70;
                 }
 
                 if (mapArray[ghost2GridY()][ghost2GridX()] == 'w') {
@@ -363,8 +371,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 }
             } else if (ghost3Direction == 1) {
                 ghost3X += ghost3Velocity;
-                if ((ghost3Y - 70) % 54 != 0) {
-                    ghost3Y = (ghost3GridY() - 1) * 54 + 70;
+                if ((ghost3Y - 70) % 55 != 0) {
+                    ghost3Y = (ghost3GridY() - 1) * 55 + 70;
                 }
 
                 if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
@@ -382,8 +390,8 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 }
             } else if (ghost3Direction == 3) {
                 ghost3X -= ghost3Velocity;
-                if ((ghost3Y - 70) % 54 != 0) {
-                    ghost3Y = (ghost3GridY() - 1) * 54 + 70;
+                if ((ghost3Y - 70) % 55 != 0) {
+                    ghost3Y = (ghost3GridY() - 1) * 55 + 70;
                 }
 
                 if (mapArray[ghost3GridY()][ghost3GridX()] == 'w') {
@@ -444,8 +452,6 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
                 ghost3Y = 785;                        
             }
 
-                ghost3Y = 785;
-                ghost3Y = 785;
             if (pacmanGridX() == fruitGridX && pacmanGridY() == fruitGridY) {
                 spawnNewFruit();
             }
@@ -479,10 +485,10 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
             g.drawImage(game, 0, 0, this);
             g.drawImage(fruitImg, fruitX, fruitY, this);
 
-            if (openMouth) {
-                g.drawImage(pacmanOpenMouthImg, pacmanX, pacmanY, this);
-            } else {
-                g.drawImage(pacmanImg, pacmanX, pacmanY, this);
+            if (pacmanDirection == 0 && openMouth) {
+                g.drawImage(pacmanOpenMouthUpImg, pacmanX, pacmanY, this);
+            } else if (pacmanDirection == 0 && !openMouth) {
+                g.drawImage(pacmanUpImg, pacmanX, pacmanY, this);
             }
 
             g.drawImage(ghost1Img, ghost1X, ghost1Y, this);
@@ -520,8 +526,14 @@ public class App extends JPanel implements KeyListener, Runnable, MouseListener 
         win = ImageIO.read(new File("resources/win.png"));
         lose = ImageIO.read(new File("resources/lose.png"));
         openMouth = false;
-        pacmanOpenMouthImg = ImageIO.read(new File("resources/pacman_open_mouth.png"));
-        pacmanImg = ImageIO.read(new File("resources/pacman.png"));
+        pacmanOpenMouthUpImg = ImageIO.read(new File("resources/pacman_open_mouth_up.png"));
+        pacmanOpenMouthDownImg = ImageIO.read(new File("resources/pacman_open_mouth_down.png"));
+        pacmanOpenMouthLeftImg = ImageIO.read(new File("resources/pacman_open_mouth_left.png"));
+        pacmanOpenMouthRightImg = ImageIO.read(new File("resources/pacman_open_mouth_right.png"));
+        pacmanUpImg = ImageIO.read(new File("resources/pacman_up.png"));
+        pacmanDownImg = ImageIO.read(new File("resources/pacman_down.png"));
+        pacmanLeftImg = ImageIO.read(new File("resources/pacman_left.png"));
+        pacmanRightImg = ImageIO.read(new File("resources/pacman_right.png"));
         pacmanX = 80;
         pacmanY = 70;
         pacmanVelocity = 1;
